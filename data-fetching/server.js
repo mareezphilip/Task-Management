@@ -5,6 +5,7 @@ const path = require('node:path');
 const dataDirectory = path.resolve(__dirname, '../public/data-fetching');
 const tasksPath = path.join(dataDirectory, 'tasks.json');
 const statisticsPath = path.join(dataDirectory, 'statistics.json');
+const teamPath = path.join(dataDirectory, 'team.json');
 const allowedStatuses = new Set(['todo', 'in_progress', 'done']);
 const allowedPriorities = new Set(['low', 'medium', 'high']);
 
@@ -69,6 +70,11 @@ const server = http.createServer(async (request, response) => {
 
   if (url.pathname === '/api/statistics' && request.method === 'GET') {
     sendJson(response, 200, readJson(statisticsPath));
+    return;
+  }
+
+  if (url.pathname === '/api/team' && request.method === 'GET') {
+    sendJson(response, 200, readJson(teamPath));
     return;
   }
 

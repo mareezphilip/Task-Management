@@ -1,8 +1,8 @@
 <aside class="sidebar" aria-label="Main navigation">
-      <nav class="nav-list">
-        @for (item of items; track item.label) {
-          <app-labeled-button [image]="item.icon" [label]="item.label" [active]="item.active" />
-        }
-      </nav>
-      <button class="new-task"><span aria-hidden="true">＋</span> New Task </button>
-    </aside>
+  <nav class="nav-list">
+    @for (item of items; track item.label) {
+      <app-labeled-button [image]="item.icon" [label]="item.label" [route]="item.route" />
+    }
+  </nav>
+  <button class="new-task"><span aria-hidden="true">＋</span> New Task</button>
+</aside>

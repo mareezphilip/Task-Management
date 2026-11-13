@@ -1,4 +1,5 @@
 import type { TaskDto } from "../DTO'S/task.dto";
+import type { Assignee } from '../../team/models/assignee.model';
 
 export type TaskStatus = 'todo' | 'in-progress' | 'done';
 export interface TaskMove {
@@ -31,12 +32,7 @@ export interface StatisticsResponse {
   lastUpdated: string;
 }
 
-export interface ApiAssignee {
-  id: string;
-  name: string;
-  avatar: string;
-  email: string;
-}
+export type ApiAssignee = Assignee;
 
 export interface ApiTask {
   id: string;

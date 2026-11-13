@@ -1,4 +1,5 @@
-import type { ApiAssignee, ApiTaskStatus, TaskPriority } from '../models/task.model';
+import type { ApiTaskStatus, TaskPriority } from '../models/task.model';
+import type { Assignee } from '../../team/models/assignee.model';
 
 /** Request body sent to the task create and update endpoints. */
 export class TaskDto {
@@ -7,7 +8,7 @@ export class TaskDto {
   status: ApiTaskStatus;
   priority: TaskPriority;
   dueDate: string;
-  assignee: Pick<ApiAssignee, 'name' | 'email'>;
+  assignee: Pick<Assignee, 'name' | 'email'>;
   tags: string[];
 
   constructor(taskData: Partial<TaskDto> = {}) {

@@ -1,4 +1,16 @@
-<button class="labeled-button" [class.active]="active()" type="button">
-  <img class="button-image" [src]="image()" alt="" aria-hidden="true">
-  <span>{{ label() }}</span>
-</button>
+@if (route(); as path) {
+  <a
+    class="labeled-button"
+    [routerLink]="path"
+    routerLinkActive="active"
+    [routerLinkActiveOptions]="{ exact: true }"
+  >
+    <img class="button-image" [src]="image()" alt="" aria-hidden="true" />
+    <span>{{ label() }}</span>
+  </a>
+} @else {
+  <button class="labeled-button" type="button">
+    <img class="button-image" [src]="image()" alt="" aria-hidden="true" />
+    <span>{{ label() }}</span>
+  </button>
+}

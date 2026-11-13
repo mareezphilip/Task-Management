@@ -10,11 +10,11 @@ import { LabeledButtonComponent } from '../../ui/labeled-button/labeled-button.c
 })
 export class DashboardSidebarComponent {
   protected readonly items = [
-    { label: 'Dashboard', icon: '/assets/sidebar/dashboard.svg', active: true },
-    { label: 'Tasks', icon: '/assets/sidebar/tasks.svg', active: false },
-    { label: 'Calendar', icon: '/assets/sidebar/calendar.svg', active: false },
-    { label: 'Analytics', icon: '/assets/sidebar/analytics.svg', active: false },
-    { label: 'Team', icon: '/assets/sidebar/team.svg', active: false },
-    { label: 'Settings', icon: '/assets/sidebar/Setting.svg', active: false },
+    { label: 'Dashboard', icon: '/assets/sidebar/dashboard.svg', route: '/' },
+    { label: 'Tasks', icon: '/assets/sidebar/tasks.svg', route: null },
+    { label: 'Calendar', icon: '/assets/sidebar/calendar.svg', route: null },
+    { label: 'Analytics', icon: '/assets/sidebar/analytics.svg', route: null },
+    { label: 'Team', icon: '/assets/sidebar/team.svg', route: '/team' },
+    { label: 'Settings', icon: '/assets/sidebar/Setting.svg', route: null },
   ];
 }

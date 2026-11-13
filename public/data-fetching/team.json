@@ -1,0 +1,27 @@
+{
+  "members": [
+    { "id": "member-1", "name": "Olivia Rhye", "avatar": "", "email": "olivia.rhye@example.com" },
+    {
+      "id": "member-2",
+      "name": "Phoenix Baker",
+      "avatar": "",
+      "email": "phoenix.baker@example.com"
+    },
+    { "id": "member-3", "name": "Lana Steiner", "avatar": "", "email": "lana.steiner@example.com" },
+    {
+      "id": "member-4",
+      "name": "Demi Wilkinson",
+      "avatar": "",
+      "email": "demi.wilkinson@example.com"
+    },
+    { "id": "member-5", "name": "Candice Wu", "avatar": "", "email": "candice.wu@example.com" },
+    { "id": "member-6", "name": "Natali Craig", "avatar": "", "email": "natali.craig@example.com" },
+    { "id": "member-7", "name": "Drew Cano", "avatar": "", "email": "drew.cano@example.com" },
+    {
+      "id": "member-8",
+      "name": "Orlando Diggs",
+      "avatar": "",
+      "email": "orlando.diggs@example.com"
+    }
+  ]
+}
