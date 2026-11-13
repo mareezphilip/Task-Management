@@ -27,10 +27,7 @@
                 "ignore": ["data-fetching/**"]
               }
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
-            ]
+            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.scss"]
           },
           "configurations": {
             "production": {
@@ -86,16 +83,20 @@
                 "ignore": ["data-fetching/**"]
               }
             ],
-            "styles": [
-              "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "src/styles.scss"
-            ]
+            "styles": ["node_modules/bootstrap/dist/css/bootstrap.min.css", "src/styles.scss"]
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }
     }
   },
   "cli": {
-    "analytics": "56d44333-72ea-4d57-97c5-7b2282e4c14d"
+    "analytics": "56d44333-72ea-4d57-97c5-7b2282e4c14d",
+    "schematicCollections": ["angular-eslint"]
   }
 }
