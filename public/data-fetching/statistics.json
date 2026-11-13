@@ -1,0 +1,45 @@
+{
+  "statistics": [
+    {
+      "id": "total-tasks",
+      "title": "Total Tasks",
+      "icon": "/assets/dashboard/totalTasks.svg",
+      "value": 13,
+      "change": "+2",
+      "changeLabel": "this week",
+      "changeType": "positive",
+      "color": "blue"
+    },
+    {
+      "id": "completed",
+      "title": "Completed",
+      "icon": "/assets/dashboard/completed.svg",
+      "value": 2,
+      "change": "+1",
+      "changeLabel": "today",
+      "changeType": "positive",
+      "color": "green"
+    },
+    {
+      "id": "in-progress",
+      "title": "In Progress",
+      "icon": "/assets/dashboard/inProgress.svg",
+      "value": 3,
+      "change": "Active",
+      "changeLabel": "right now",
+      "changeType": "neutral",
+      "color": "slate"
+    },
+    {
+      "id": "overdue",
+      "title": "Overdue",
+      "icon": "/assets/dashboard/overdue.svg",
+      "value": 2,
+      "change": "Needs attention",
+      "changeLabel": "past due",
+      "changeType": "negative",
+      "color": "red"
+    }
+  ],
+  "lastUpdated": "2026-11-13T14:13:07.947Z"
+}

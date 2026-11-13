@@ -1,0 +1,286 @@
+{
+  "tasks": [
+    {
+      "id": "task-4",
+      "title": "Update payment gateway integration",
+      "description": "Migrate to the new payment provider API and update billing logic.",
+      "status": "in_progress",
+      "priority": "high",
+      "dueDate": "2026-11-10T14:04:18.662Z",
+      "isOverdue": true,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-2",
+        "name": "John Davis",
+        "avatar": "",
+        "email": "john@example.com"
+      },
+      "tags": [
+        "Backend",
+        "Payments"
+      ],
+      "createdAt": "2026-11-01T14:04:18.662Z",
+      "updatedAt": "2026-11-13T14:12:58.540Z"
+    },
+    {
+      "id": "task-6",
+      "title": "Fix mobile login issue",
+      "description": "Resolve the issue preventing users from logging in on mobile devices.",
+      "status": "done",
+      "priority": "medium",
+      "dueDate": "2026-11-10T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": "2026-11-11T14:04:18.662Z",
+      "assignee": {
+        "id": "user-3",
+        "name": "Mike Taylor",
+        "avatar": "",
+        "email": "mike@example.com"
+      },
+      "tags": [
+        "Bug Fix",
+        "Mobile"
+      ],
+      "createdAt": "2026-11-06T14:04:18.662Z",
+      "updatedAt": "2026-11-11T14:04:18.662Z"
+    },
+    {
+      "id": "task-1",
+      "title": "Prepare Q4 budget report",
+      "description": "Compile and analyze financial data for the quarterly budget presentation.",
+      "status": "todo",
+      "priority": "high",
+      "dueDate": "2026-11-09T14:04:18.662Z",
+      "isOverdue": true,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1",
+        "name": "Sarah Smith",
+        "avatar": "",
+        "email": "sarah@example.com"
+      },
+      "tags": [
+        "Finance",
+        "Planning"
+      ],
+      "createdAt": "2026-10-30T14:04:18.662Z",
+      "updatedAt": "2026-11-12T15:40:24.603Z"
+    },
+    {
+      "id": "task-2",
+      "title": "Design new homepage layout",
+      "description": "Create wireframes and mockups for the homepage redesign.",
+      "status": "todo",
+      "priority": "high",
+      "dueDate": "2026-11-13T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-2",
+        "name": "John Davis",
+        "avatar": "",
+        "email": "john@example.com"
+      },
+      "tags": [
+        "Design",
+        "Website"
+      ],
+      "createdAt": "2026-11-03T14:04:18.662Z",
+      "updatedAt": "2026-11-12T12:23:39.514Z"
+    },
+    {
+      "id": "task-3",
+      "title": "Update API documentation",
+      "description": "Review and update API documentation for the v2.0 release.",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-16T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1",
+        "name": "Sarah Smith",
+        "avatar": "",
+        "email": "sarah@example.com"
+      },
+      "tags": [
+        "Documentation"
+      ],
+      "createdAt": "2026-11-05T14:04:18.662Z",
+      "updatedAt": "2026-11-12T12:23:33.942Z"
+    },
+    {
+      "id": "task-1794413191260",
+      "title": "test task",
+      "description": "Description",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-21T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794413191260",
+        "name": "mareez philip",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-11T16:06:31.260Z",
+      "updatedAt": "2026-11-11T16:06:31.260Z"
+    },
+    {
+      "id": "task-1794431900438",
+      "title": "testttt",
+      "description": "desc",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-24T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794431900438",
+        "name": "mareeez",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-11T21:18:20.438Z",
+      "updatedAt": "2026-11-11T21:18:20.438Z"
+    },
+    {
+      "id": "task-1794475768559",
+      "title": "new task",
+      "description": "desc",
+      "status": "in_progress",
+      "priority": "medium",
+      "dueDate": "2026-11-18T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794475768559",
+        "name": "veraa",
+        "avatar": "",
+        "email": "viraphilip7@gmail.com"
+      },
+      "tags": [
+        "Design"
+      ],
+      "createdAt": "2026-11-12T09:29:28.554Z",
+      "updatedAt": "2026-11-12T09:29:28.554Z"
+    },
+    {
+      "id": "task-1794498232630",
+      "title": "task 2",
+      "description": "desc",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-13T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794498232630",
+        "name": "mareeez",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-12T15:43:52.630Z",
+      "updatedAt": "2026-11-12T15:43:52.630Z"
+    },
+    {
+      "id": "task-1794499009697",
+      "title": "testttt",
+      "description": "desc",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-19T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794499009697",
+        "name": "mareeez",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-12T15:56:49.697Z",
+      "updatedAt": "2026-11-12T15:56:49.697Z"
+    },
+    {
+      "id": "task-1794499567302",
+      "title": "task 6",
+      "description": "desc",
+      "status": "todo",
+      "priority": "medium",
+      "dueDate": "2026-11-25T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794499567302",
+        "name": "mareeez",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-12T16:06:07.302Z",
+      "updatedAt": "2026-11-12T16:06:07.302Z"
+    },
+    {
+      "id": "task-1794431853387",
+      "title": "test",
+      "description": "desc",
+      "status": "in_progress",
+      "priority": "medium",
+      "dueDate": "2026-11-26T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794431853387",
+        "name": "mareeez",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": [
+        "Development"
+      ],
+      "createdAt": "2026-11-11T21:17:33.387Z",
+      "updatedAt": "2026-11-12T16:06:28.859Z"
+    },
+    {
+      "id": "task-5",
+      "title": "Implement user authentication",
+      "description": "Add JWT-based authentication with refresh token support.",
+      "status": "done",
+      "priority": "high",
+      "dueDate": "2026-11-14T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": "2026-11-13T14:13:07.947Z",
+      "assignee": {
+        "id": "user-3",
+        "name": "Mike Taylor",
+        "avatar": "",
+        "email": "mike@example.com"
+      },
+      "tags": [
+        "Backend",
+        "Security"
+      ],
+      "createdAt": "2026-11-04T14:04:18.662Z",
+      "updatedAt": "2026-11-13T14:13:07.947Z"
+    }
+  ],
+  "meta": {
+    "totalCount": 13,
+    "lastUpdated": "2026-11-13T14:13:07.947Z"
+  }
+}
