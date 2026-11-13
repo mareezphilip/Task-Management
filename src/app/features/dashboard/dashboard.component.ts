@@ -11,7 +11,7 @@ import {
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { SelectModule } from 'primeng/select';
-import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
+import { finalize } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ApiTask,
@@ -24,7 +24,7 @@ import {
   TASK_PRIORITY_OPTIONS,
 } from './models/task.model';
 import { DashboardDataService } from './services/dashboard-data.service';
-import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
+import { DashboardSearchService } from './services/dashboard-search.service';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { StatisticsCardsComponent } from './components/statistics-cards/statistics-cards.component';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
@@ -35,7 +35,6 @@ import { LoadingService } from '../../core/services/globalErrorHandler/loading-s
   selector: 'app-dashboard',
   standalone: true,
   imports: [
-    DashboardHeaderComponent,
     MatDialogModule,
     FormsModule,
     SelectModule,
@@ -48,15 +47,15 @@ import { LoadingService } from '../../core/services/globalErrorHandler/loading-s
 })
 export class DashboardComponent implements OnInit {
   private readonly dashboardData = inject(DashboardDataService);
+  private readonly dashboardSearch = inject(DashboardSearchService);
   private readonly dialog = inject(MatDialog);
   private readonly destroyRef = inject(DestroyRef);
   private readonly changeDetector = inject(ChangeDetectorRef);
   protected readonly loading = inject(LoadingService);
-  private readonly searchChanges = new Subject<string>();
   private readonly statistics = signal<DashboardMetric[]>([]);
   private readonly optimisticTasks = signal<Task[] | null>(null);
   protected readonly tasks = computed(() => {
-    const search = this.searchTerm().toLowerCase();
+    const search = this.dashboardSearch.searchTerm().toLowerCase();
     return (
       this.optimisticTasks() ?? this.dashboardData.tasks().map((task) => this.toDashboardTask(task))
     )
@@ -112,7 +111,6 @@ export class DashboardComponent implements OnInit {
   protected readonly activeFilter = signal<ApiTaskStatus | 'all'>('all');
   protected readonly selectedPriority = signal<TaskPriority | 'all'>('all');
   protected readonly selectedAssignee = signal<string>('all');
-  protected readonly searchTerm = signal('');
   protected readonly filters: { label: string; status: ApiTaskStatus | 'all' }[] = [
     { label: 'All', status: 'all' },
     { label: 'To Do', status: 'todo' },
@@ -121,17 +119,8 @@ export class DashboardComponent implements OnInit {
   ];
 
   ngOnInit(): void {
-    this.searchChanges
-      .pipe(debounceTime(250), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
-      .subscribe((search) => {
-        this.searchTerm.set(search.trim());
-      });
     this.loadStatistics();
     this.loadTasks();
-  }
-
-  protected searchTasks(search: string): void {
-    this.searchChanges.next(search.trim());
   }
 
   protected selectFilter(status: ApiTaskStatus | 'all'): void {

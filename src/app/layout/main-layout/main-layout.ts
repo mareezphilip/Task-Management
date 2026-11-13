@@ -1,14 +1,21 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { DashboardSidebarComponent } from '../../shared/layout/dashboard-sidebar/dashboard-sidebar.component';
+import { DashboardHeaderComponent } from '../../features/dashboard/components/dashboard-header/dashboard-header.component';
+import { DashboardSearchService } from '../../features/dashboard/services/dashboard-search.service';
 
 @Component({
   selector: 'app-main-layout',
   standalone: true,
-  imports: [DashboardSidebarComponent, RouterOutlet],
+  imports: [DashboardHeaderComponent, DashboardSidebarComponent, RouterOutlet],
   templateUrl: './main-layout.html',
   styleUrl: './main-layout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayout {
+  private readonly dashboardSearch = inject(DashboardSearchService);
+
+  protected searchChanged(search: string): void {
+    this.dashboardSearch.searchChanged(search);
+  }
 }

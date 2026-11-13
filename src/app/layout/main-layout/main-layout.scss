@@ -1,7 +1,22 @@
-:host { display: block; min-height: 100vh; }
-.app-shell { min-height: 100vh; background: #f4f6f9; }
-.workspace { display: grid; grid-template-columns: 164px minmax(0, 1fr); min-height: 100vh; }
-.routed-content { min-width: 0; }
+:host {
+  display: block;
+  min-height: 100vh;
+}
+.app-shell {
+  min-height: 100vh;
+  background: #f4f6f9;
+}
+.workspace {
+  display: grid;
+  grid-template-columns: 204px minmax(0, 1fr);
+  min-height: calc(100vh - 64px);
+}
+.routed-content {
+  min-width: 0;
+}
 @media (max-width: 760px) {
-  .workspace { grid-template-columns: 1fr; min-height: auto; }
+  .workspace {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
 }

@@ -1,29 +1,52 @@
-<app-dashboard-header (searchChanged)="searchTasks($event)" />
 <main class="main-content">
   @if (loading.isLoading()) {
-  <p class="data-message" role="status">Loading dashboard data…</p>
+    <p class="data-message" role="status">Loading dashboard data…</p>
   }
   <app-statistics-cards [metrics]="metrics()" />
   <section class="board-toolbar" aria-label="Task board controls">
     <div class="filters" aria-label="Task status filters">
       @for (filter of filters; track filter.status) {
-      <button type="button" [class.selected]="activeFilter() === filter.status"
-        [attr.aria-pressed]="activeFilter() === filter.status" (click)="selectFilter(filter.status)">{{ filter.label
-        }}</button>
+        <button
+          type="button"
+          [class.selected]="activeFilter() === filter.status"
+          [attr.aria-pressed]="activeFilter() === filter.status"
+          (click)="selectFilter(filter.status)"
+        >
+          {{ filter.label }}
+        </button>
       }
     </div>
     <div class="board-actions">
-      <p-select [options]="priorityOptions" optionLabel="label" optionValue="value"
-        [ngModel]="selectedPriority()" (ngModelChange)="selectedPriority.set($event)"
-        ariaLabel="Filter by priority" placeholder="Priority" appendTo="body"
-        styleClass="task-filter-select" />
-      <p-select [options]="assigneeOptions()" optionLabel="label" optionValue="value"
-        [ngModel]="selectedAssignee()" (ngModelChange)="selectedAssignee.set($event)"
-        ariaLabel="Filter by assignee name" placeholder="Assignee" appendTo="body"
-        styleClass="task-filter-select" />
+      <p-select
+        [options]="priorityOptions"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="selectedPriority()"
+        (ngModelChange)="selectedPriority.set($event)"
+        ariaLabel="Filter by priority"
+        placeholder="Priority"
+        appendTo="body"
+        styleClass="task-filter-select"
+      />
+      <p-select
+        [options]="assigneeOptions()"
+        optionLabel="label"
+        optionValue="value"
+        [ngModel]="selectedAssignee()"
+        (ngModelChange)="selectedAssignee.set($event)"
+        ariaLabel="Filter by assignee name"
+        placeholder="Assignee"
+        appendTo="body"
+        styleClass="task-filter-select"
+      />
       <button class="create-button" type="button" (click)="openCreateForm()">＋ New Task</button>
     </div>
   </section>
-  <app-task-board [tasks]="tasks()" [saving]="isSavingMove || loading.isLoading()" (editRequested)="editTask($event)"
-    (deleteRequested)="deleteTask($event)" (taskMoved)="moveTask($event)" />
+  <app-task-board
+    [tasks]="tasks()"
+    [saving]="isSavingMove || loading.isLoading()"
+    (editRequested)="editTask($event)"
+    (deleteRequested)="deleteTask($event)"
+    (taskMoved)="moveTask($event)"
+  />
 </main>

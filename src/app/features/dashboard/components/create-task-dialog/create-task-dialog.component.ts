@@ -41,7 +41,7 @@ export class CreateTaskDialogComponent {
     { value: 'in_progress', label: 'In Progress' },
     { value: 'done', label: 'Completed' },
   ];
-  protected readonly priorityOptions = TASK_PRIORITY_OPTIONS;
+  protected readonly priorityOptions = [...TASK_PRIORITY_OPTIONS];
   protected readonly tagOptions = [
     'Design',
     'Development',
