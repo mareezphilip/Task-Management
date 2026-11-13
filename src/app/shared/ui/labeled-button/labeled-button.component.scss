@@ -1,0 +1,48 @@
+:host {
+  display: block;
+}
+
+.labeled-button {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 36px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 4px;
+  color: #303640;
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  text-align: left;
+  transition: background-color 120ms ease;
+}
+
+.labeled-button:hover {
+  background: #eef0f2;
+}
+
+.labeled-button.active {
+  color: #fff;
+  background: #1976d2;
+}
+
+.labeled-button.active .button-image {
+  filter: brightness(0) invert(1);
+}
+
+.labeled-button.active:hover {
+  background: #eef0f2;
+  color: #303640;
+}
+
+.labeled-button.active:hover .button-image {
+  filter: none;
+}
+
+.button-image {
+  width: 14px;
+  flex: 0 0 14px;
+  object-fit: contain;
+}

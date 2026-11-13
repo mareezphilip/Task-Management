@@ -1,0 +1,40 @@
+:host {
+  display: block;
+  min-width: min(20rem, 78vw);
+}
+
+mat-dialog-content {
+  color: #626b76;
+  line-height: 1.5;
+}
+
+mat-dialog-actions {
+  gap: 8px;
+  padding: 12px 24px 20px;
+}
+
+button {
+  padding: 8px 14px;
+  border: 1px solid #d9dee5;
+  border-radius: 5px;
+  background: #fff;
+  color: #303640;
+  font: inherit;
+  cursor: pointer;
+}
+
+.confirm-button {
+  border-color: #1976d2;
+  background: #1976d2;
+  color: #fff;
+}
+
+.danger-button {
+  border-color: #c62828;
+  background: #c62828;
+}
+
+button:focus-visible {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
