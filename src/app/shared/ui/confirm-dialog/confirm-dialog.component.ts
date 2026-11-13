@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 export interface ConfirmDialogData {
@@ -16,10 +16,8 @@ export interface ConfirmDialogData {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfirmDialogComponent {
-  constructor(
-    @Inject(MAT_DIALOG_DATA) protected readonly data: ConfirmDialogData,
-    private readonly dialogRef: MatDialogRef<ConfirmDialogComponent, boolean>,
-  ) {}
+  protected readonly data = inject<ConfirmDialogData>(MAT_DIALOG_DATA);
+  private readonly dialogRef = inject(MatDialogRef<ConfirmDialogComponent, boolean>);
 
   protected close(confirmed: boolean): void {
     this.dialogRef.close(confirmed);

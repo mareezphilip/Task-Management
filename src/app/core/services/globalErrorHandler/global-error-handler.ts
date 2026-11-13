@@ -1,4 +1,4 @@
-import { NgZone, Injectable } from '@angular/core';
+import { inject, Injectable, NgZone } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   MatSnackBar,
@@ -10,13 +10,10 @@ import {
   providedIn: 'root',
 })
 export class GlobalErrorHandler {
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly zone = inject(NgZone);
   readonly horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   readonly verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
-  constructor(
-    private readonly snackBar: MatSnackBar,
-    private readonly zone: NgZone,
-  ) {}
 
   handleError(error: HttpErrorResponse): void {
     const message = this.getErrorMessage(error);
