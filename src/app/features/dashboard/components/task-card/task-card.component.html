@@ -25,11 +25,11 @@
   <p class="description">{{ task().description }}</p>
   <div class="due d-flex" [class.late]="task().overdue">
     @if (task().overdue) {
-      <img src="/assests/dashboard/overdue.svg" alt="Overdue icon" />
+      <img src="/assets/dashboard/overdue.svg" alt="Overdue icon" />
     } @else if (task().status === 'done') {
-      <img src="/assests/dashboard/completed.svg" alt="Completed icon" />
+      <img src="/assets/dashboard/completed.svg" alt="Completed icon" />
     } @else if (task().status === 'in-progress' || task().status === 'todo') {
-      <img src="/assests/sidebar/calendar.svg" alt="In Progress icon" />
+      <img src="/assets/sidebar/calendar.svg" alt="In Progress icon" />
     }
     <p>{{ task().dueLabel }}</p>
   </div>
