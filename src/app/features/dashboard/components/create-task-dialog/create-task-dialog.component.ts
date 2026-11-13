@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, Optional, output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  inject,
+  output,
+} from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -21,6 +27,12 @@ import { ConfirmDialogComponent } from '../../../../shared/ui/confirm-dialog/con
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateTaskDialogComponent {
+  private readonly dialogRef = inject(MatDialogRef<CreateTaskDialogComponent>);
+  private readonly dialog = inject(MatDialog);
+  private readonly dashboardData = inject(DashboardDataService);
+  private readonly changeDetector = inject(ChangeDetectorRef);
+  private readonly formBuilder = inject(FormBuilder);
+  protected readonly taskToEdit = inject<ApiTask | null>(MAT_DIALOG_DATA, { optional: true });
   readonly taskSaved = output<void>();
   protected loading = false;
 
@@ -30,26 +42,34 @@ export class CreateTaskDialogComponent {
     { value: 'done', label: 'Completed' },
   ];
   protected readonly priorityOptions = TASK_PRIORITY_OPTIONS;
-  protected readonly tagOptions = ['Design', 'Development', 'Documentation', 'Finance', 'Operations'];
+  protected readonly tagOptions = [
+    'Design',
+    'Development',
+    'Documentation',
+    'Finance',
+    'Operations',
+  ];
   protected readonly taskDto = new TaskDto();
   protected readonly taskForm: FormGroup;
-  constructor(
-    private readonly dialogRef: MatDialogRef<CreateTaskDialogComponent>,
-    private readonly dialog: MatDialog,
-    private readonly dashboardData: DashboardDataService,
-    private readonly changeDetector: ChangeDetectorRef,
-    private readonly formBuilder: FormBuilder,
-    @Optional() @Inject(MAT_DIALOG_DATA) protected readonly taskToEdit: ApiTask | null,
-  ) {
+  constructor() {
     const task = this.taskToEdit;
     if (task) this.taskDto = new TaskDto({ ...task, dueDate: task.dueDate.slice(0, 10) });
     this.taskForm = this.formBuilder.nonNullable.group({
-      title: [this.taskDto.title, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/), Validators.maxLength(120)]],
-      description: [this.taskDto.description, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)]],
+      title: [
+        this.taskDto.title,
+        [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/), Validators.maxLength(120)],
+      ],
+      description: [
+        this.taskDto.description,
+        [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)],
+      ],
       status: [this.taskDto.status, Validators.required],
       priority: [this.taskDto.priority, Validators.required],
       dueDate: [this.taskDto.dueDate, Validators.required],
-      assigneeName: [this.taskDto.assignee.name, [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)]],
+      assigneeName: [
+        this.taskDto.assignee.name,
+        [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)],
+      ],
       assigneeEmail: [this.taskDto.assignee.email, [Validators.required, Validators.email]],
       tags: [this.taskDto.tags],
     });
@@ -100,19 +120,22 @@ export class CreateTaskDialogComponent {
     });
 
     this.loading = true;
+
     const saveTask = this.taskToEdit
       ? this.dashboardData.updateTask(this.taskToEdit.id, request)
       : this.dashboardData.createTask(request);
-    saveTask.pipe(
-      finalize(() => {
-        this.loading = false;
-        this.changeDetector.markForCheck();
-      }),
-    ).subscribe({
-      next: () => {
-        this.taskSaved.emit();
-        this.dialogRef.close();
-      },
-    });
+    saveTask
+      .pipe(
+        finalize(() => {
+          this.loading = false;
+          this.changeDetector.markForCheck();
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.taskSaved.emit();
+          this.dialogRef.close();
+        },
+      });
   }
 }
