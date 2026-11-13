@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, DestroyRef, OnInit, computed, signal } from '@angular/core';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { FormsModule } from '@angular/forms';
+import { SelectModule } from 'primeng/select';
 import { debounceTime, distinctUntilChanged, finalize, Subject } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { ApiTask, ApiTaskStatus, DashboardMetric, Task, TaskMove, TaskStatus } from './models/task.model';
+import { ApiTask, ApiTaskStatus, DashboardMetric, Task, TaskMove, TaskPriority, TaskStatus, TASK_PRIORITY_OPTIONS } from './models/task.model';
 import { DashboardDataService } from './services/dashboard-data.service';
 import { DashboardHeaderComponent } from './components/dashboard-header/dashboard-header.component';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
@@ -14,7 +16,7 @@ import { LoadingService } from '../../core/services/globalErrorHandler/loading-s
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [DashboardHeaderComponent, MatDialogModule, StatisticsCardsComponent, TaskBoardComponent],
+  imports: [DashboardHeaderComponent, MatDialogModule, FormsModule, SelectModule, StatisticsCardsComponent, TaskBoardComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -27,8 +29,20 @@ export class DashboardComponent implements OnInit {
     const search = this.searchTerm().toLowerCase();
     return (this.optimisticTasks() ?? this.dashboardData.tasks().map((task) => this.toDashboardTask(task)))
       .filter((task) => this.activeFilter() === 'all' || this.toApiStatus(task.status) === this.activeFilter())
+      .filter((task) => this.selectedPriority() === 'all' || task.priority === this.selectedPriority())
+      .filter((task) => this.selectedAssignee() === 'all' || task.assignee.fullName === this.selectedAssignee())
       .filter((task) => !search || `${task.title} ${task.description}`.toLowerCase().includes(search));
   });
+  protected readonly priorityOptions: { label: string; value: TaskPriority | 'all' }[] = [
+    { label: 'All priorities', value: 'all' },
+    ...TASK_PRIORITY_OPTIONS,
+  ];
+  protected readonly assigneeOptions = computed(() => [
+    { label: 'All assignees', value: 'all' },
+    ...Array.from(new Set(this.dashboardData.tasks().map((task) => task.assignee.name.trim()).filter(Boolean)))
+      .sort((a, b) => a.localeCompare(b))
+      .map((name) => ({ label: name, value: name })),
+  ]);
   protected readonly metrics = computed(() => {
     const tasks = this.dashboardData.tasks();
     return this.statistics().map((metric) => ({
@@ -42,6 +56,8 @@ export class DashboardComponent implements OnInit {
   });
   protected isSavingMove = false;
   protected readonly activeFilter = signal<ApiTaskStatus | 'all'>('all');
+  protected readonly selectedPriority = signal<TaskPriority | 'all'>('all');
+  protected readonly selectedAssignee = signal<string>('all');
   protected readonly searchTerm = signal('');
   protected readonly filters: { label: string; status: ApiTaskStatus | 'all' }[] = [
     { label: 'All', status: 'all' },
@@ -179,6 +195,7 @@ export class DashboardComponent implements OnInit {
       category: task.tags[0] ?? 'General',
       assignee: {
         name: task.assignee.name.split(' ')[0],
+        fullName: task.assignee.name,
         initials: task.assignee.name.split(' ').map((part) => part[0]).join('').slice(0, 2).toUpperCase(),
       },
       overdue: task.isOverdue,

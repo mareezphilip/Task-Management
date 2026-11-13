@@ -8,7 +8,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { finalize } from 'rxjs';
 import { TaskDto } from "../../DTO'S/task.dto";
-import { ApiTask, ApiTaskStatus, TaskPriority } from '../../models/task.model';
+import { ApiTask, ApiTaskStatus, TASK_PRIORITY_OPTIONS } from '../../models/task.model';
 import { DashboardDataService } from '../../services/dashboard-data.service';
 import { ConfirmDialogComponent } from '../../../../shared/ui/confirm-dialog/confirm-dialog.component';
 
@@ -29,11 +29,7 @@ export class CreateTaskDialogComponent {
     { value: 'in_progress', label: 'In Progress' },
     { value: 'done', label: 'Completed' },
   ];
-  protected readonly priorityOptions: { value: TaskPriority; label: string }[] = [
-    { value: 'low', label: 'Low' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'high', label: 'High' },
-  ];
+  protected readonly priorityOptions = TASK_PRIORITY_OPTIONS;
   protected readonly tagOptions = ['Design', 'Development', 'Documentation', 'Finance', 'Operations'];
   protected readonly taskDto = new TaskDto();
   protected readonly taskForm: FormGroup;

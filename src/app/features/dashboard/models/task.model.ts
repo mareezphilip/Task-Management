@@ -8,6 +8,11 @@ export interface TaskMove {
 }
 export type ApiTaskStatus = 'todo' | 'in_progress' | 'done';
 export type TaskPriority = 'low' | 'medium' | 'high';
+export const TASK_PRIORITY_OPTIONS: readonly { value: TaskPriority; label: string }[] = [
+  { value: 'low', label: 'Low' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'high', label: 'High' },
+];
 export type ChangeType = 'positive' | 'negative' | 'neutral';
 
 export interface Statistic {
@@ -63,7 +68,7 @@ export interface Task {
   status: TaskStatus;
   dueLabel: string;
   category: string;
-  assignee: { name: string; initials: string };
+  assignee: { name: string; fullName?: string; initials: string };
   overdue?: boolean;
 }
 

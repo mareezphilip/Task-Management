@@ -1,28 +1,6 @@
 {
   "tasks": [
     {
-      "id": "task-4",
-      "title": "Update payment gateway integration",
-      "description": "Migrate to the new payment provider API and update billing logic.",
-      "status": "in_progress",
-      "priority": "high",
-      "dueDate": "2026-11-10T14:04:18.662Z",
-      "isOverdue": true,
-      "completedAt": null,
-      "assignee": {
-        "id": "user-2",
-        "name": "John Davis",
-        "avatar": "",
-        "email": "john@example.com"
-      },
-      "tags": [
-        "Backend",
-        "Payments"
-      ],
-      "createdAt": "2026-11-01T14:04:18.662Z",
-      "updatedAt": "2026-11-13T14:12:58.540Z"
-    },
-    {
       "id": "task-6",
       "title": "Fix mobile login issue",
       "description": "Resolve the issue preventing users from logging in on mobile devices.",
@@ -150,6 +128,28 @@
       ],
       "createdAt": "2026-11-11T21:18:20.438Z",
       "updatedAt": "2026-11-11T21:18:20.438Z"
+    },
+    {
+      "id": "task-4",
+      "title": "Update payment gateway integration",
+      "description": "Migrate to the new payment provider API and update billing logic.",
+      "status": "in_progress",
+      "priority": "high",
+      "dueDate": "2026-11-10T14:04:18.662Z",
+      "isOverdue": true,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-2",
+        "name": "John Davis",
+        "avatar": "",
+        "email": "john@example.com"
+      },
+      "tags": [
+        "Backend",
+        "Payments"
+      ],
+      "createdAt": "2026-11-01T14:04:18.662Z",
+      "updatedAt": "2026-11-13T16:26:43.769Z"
     },
     {
       "id": "task-1794475768559",
@@ -281,6 +281,6 @@
   ],
   "meta": {
     "totalCount": 13,
-    "lastUpdated": "2026-11-13T14:13:07.947Z"
+    "lastUpdated": "2026-11-13T16:26:43.769Z"
   }
 }
