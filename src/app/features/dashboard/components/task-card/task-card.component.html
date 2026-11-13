@@ -1,0 +1,23 @@
+<article class="task-card" [class.overdue]="task().overdue">
+  <div class="card-heading"><span [class]="'priority ' + task().priority">{{ task().priority }}</span>
+    <div class="task-menu-wrap"><button class="more" type="button" aria-label="More task options"
+        [attr.aria-expanded]="menuOpen" (click)="menuOpen = !menuOpen">⋮</button>@if (menuOpen) { <div class="task-menu"
+        role="menu"><button type="button" role="menuitem" (click)="editTask()">Edit task </button><button type="button"
+          role="menuitem" class="delete-action" (click)="deleteTask()">Delete Task</button></div> }</div>
+  </div>
+  <h3>{{ task().title }}</h3>
+  <p class="description">{{ task().description }}</p>
+  <div class="due d-flex  " [class.late]="task().overdue">
+    @if (task().overdue) {
+      <img src="/assests/dashboard/overdue.svg" alt="Overdue icon" />
+    } @else if (task().status === 'done') {
+      <img src="/assests/dashboard/completed.svg" alt="Completed icon" />
+    } @else if (task().status === 'in-progress' || task().status == 'todo') {
+      <img src="/assests/sidebar/calendar.svg" alt="In Progress icon" />
+    }
+   <p>  {{ task().dueLabel }} </p>
+  </div>
+  <p class="category">{{ task().category }}</p>
+  <div class="card-footer"><span class="avatar">{{ task().assignee.initials }}</span><span>@{{ task().assignee.name
+      }}</span></div>
+</article>

@@ -1,0 +1,112 @@
+<h2 mat-dialog-title>{{ taskToEdit ? 'Edit task' : 'Create task' }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="taskForm" class="create-form" (ngSubmit)="submitTask()">
+    <label for="task-title">Title</label>
+    <input pInputText id="task-title" formControlName="title" maxlength="120"
+      [attr.aria-invalid]="taskForm.controls['title'].invalid && taskForm.controls['title'].touched"
+      aria-describedby="task-title-error" />
+    @if (taskForm.controls['title'].invalid && taskForm.controls['title'].touched) {
+      <small id="task-title-error" class="field-error" role="alert">
+        {{ taskForm.controls['title'].hasError('maxlength') ? 'Title must be 120 characters or fewer.' : 'Please enter a task title.' }}
+      </small>
+    }
+
+    <label for="task-description">Description</label>
+    <textarea id="task-description" formControlName="description" rows="3"
+      [attr.aria-invalid]="taskForm.controls['description'].invalid && taskForm.controls['description'].touched"
+      aria-describedby="task-description-error"></textarea>
+    @if (taskForm.controls['description'].invalid && taskForm.controls['description'].touched) {
+      <small id="task-description-error" class="field-error" role="alert">Please enter a description.</small>
+    }
+
+    <div class="form-row">
+      <div class="field">
+        <label for="task-status">Status</label>
+        <p-select
+          inputId="task-status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          aria-describedby="status-error"
+        />
+        @if (taskForm.controls['status'].invalid && taskForm.controls['status'].touched) {
+          <small id="status-error" class="field-error" role="alert">Please select a status.</small>
+        }
+      </div>
+      <div class="field">
+        <label for="task-priority">Priority</label>
+        <p-select
+          inputId="task-priority"
+          formControlName="priority"
+          [options]="priorityOptions"
+          optionLabel="label"
+          optionValue="value"
+          aria-describedby="priority-error"
+        />
+        @if (taskForm.controls['priority'].invalid && taskForm.controls['priority'].touched) {
+          <small id="priority-error" class="field-error" role="alert">Please select a priority.</small>
+        }
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="field">
+        <label for="task-due-date">Due date</label>
+        <input
+          pInputText
+          id="task-due-date"
+          formControlName="dueDate"
+          type="date"
+          [attr.aria-invalid]="taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched"
+          aria-describedby="task-due-date-error"
+        />
+        @if (taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched) {
+          <small id="task-due-date-error" class="field-error" role="alert">Please select a valid due date.</small>
+        }
+      </div>
+      <div class="field">
+        <label for="task-assignee">Assignee</label>
+        <input pInputText id="task-assignee" formControlName="assigneeName"
+          [attr.aria-invalid]="taskForm.controls['assigneeName'].invalid && taskForm.controls['assigneeName'].touched"
+          aria-describedby="task-assignee-error" />
+        @if (taskForm.controls['assigneeName'].invalid && taskForm.controls['assigneeName'].touched) {
+          <small id="task-assignee-error" class="field-error" role="alert">Please enter the assignee's name.</small>
+        }
+      </div>
+    </div>
+
+    <label for="task-email">Assignee email</label>
+    <input pInputText id="task-email" type="email" formControlName="assigneeEmail"
+      [attr.aria-invalid]="taskForm.controls['assigneeEmail'].invalid && taskForm.controls['assigneeEmail'].touched"
+      aria-describedby="task-email-error" />
+    @if (taskForm.controls['assigneeEmail'].invalid && taskForm.controls['assigneeEmail'].touched) {
+      <small id="task-email-error" class="field-error" role="alert">
+        {{ taskForm.controls['assigneeEmail'].hasError('required') ? 'Please enter the assignee email.' : 'Please enter a valid email address.' }}
+      </small>
+    }
+
+    <fieldset class="tag-fieldset">
+      <legend>Tags</legend>
+      <div class="tag-options">
+        @for (tag of tagOptions; track tag) {
+          <div class="tag-option">
+            <p-checkbox
+              [inputId]="'task-tag-' + tag"
+              [value]="tag"
+              formControlName="tags"
+            />
+            <label [for]="'task-tag-' + tag">{{ tag }}</label>
+          </div>
+        }
+      </div>
+    </fieldset>
+
+    <div class="form-actions">
+      <button type="button" class="cancel-button" [disabled]="loading" (click)="close()">Cancel</button>
+      <button type="submit" class="save-button" [disabled]="loading">
+        {{ loading ? 'Saving…' : (taskToEdit ? 'Save changes' : 'Save task') }}
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>

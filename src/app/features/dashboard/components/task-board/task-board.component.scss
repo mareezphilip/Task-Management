@@ -1,0 +1,13 @@
+:host { display: block; min-height: 0; }
+    .board { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; min-height: 470px; }
+    .board-column { min-width: 0; padding: 12px; background: #fff; border: 1px solid #edf0f4; border-radius: 7px; box-shadow: 0 2px 5px #1b27330a; }
+    .column-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 9px; border-bottom: 1px solid #e8ebef; }
+    h2 { margin: 0; font-size: 11px; font-weight: 700; }
+    .column-header span { display: grid; place-items: center; min-width: 20px; height: 18px; padding: 0 5px; border-radius: 10px; color: #555b61; background: #eef0f2; font-size: 9px; }
+    .task-list { display: grid; align-content: start; gap: 9px; padding-top: 9px; }
+    .task-list { min-height: 400px; }
+    .task-list.cdk-drop-list-dragging { background: #f7faff; }
+    .cdk-drag-preview { box-sizing: border-box; border-radius: 6px; box-shadow: 0 8px 18px #1b273326; }
+    .cdk-drag-placeholder { opacity: .25; }
+    .cdk-drag-animating { transition: transform 180ms ease; }
+    @media (max-width: 900px) { .board { grid-template-columns: 1fr; min-height: auto; } }
