@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit {
 
   protected openCreateForm(): void {
     this.dialog.open(CreateTaskDialogComponent, {
-      width: 'min(44rem, 94vw)',
+      width: 'min(50rem, 94vw)',
       maxWidth: '94vw',
       disableClose: true,
     });

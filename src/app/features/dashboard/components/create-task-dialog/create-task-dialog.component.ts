@@ -2,8 +2,11 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  DestroyRef,
   inject,
+  OnInit,
   output,
+  signal,
 } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatDialog } from '@angular/material/dialog';
@@ -13,9 +16,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { finalize } from 'rxjs';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TaskDto } from "../../DTO'S/task.dto";
 import { ApiTask, ApiTaskStatus, TASK_PRIORITY_OPTIONS } from '../../models/task.model';
 import { DashboardDataService } from '../../services/dashboard-data.service';
+import { TeamDataService } from '../../../team/services/TeamDataService/team-data.service';
+import type { Assignee } from '../../../team/models/assignee.model';
 import { ConfirmDialogComponent } from '../../../../shared/ui/confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -26,15 +32,19 @@ import { ConfirmDialogComponent } from '../../../../shared/ui/confirm-dialog/con
   styleUrl: './create-task-dialog.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateTaskDialogComponent {
+export class CreateTaskDialogComponent implements OnInit {
   private readonly dialogRef = inject(MatDialogRef<CreateTaskDialogComponent>);
   private readonly dialog = inject(MatDialog);
   private readonly dashboardData = inject(DashboardDataService);
+  private readonly teamData = inject(TeamDataService);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly changeDetector = inject(ChangeDetectorRef);
   private readonly formBuilder = inject(FormBuilder);
   protected readonly taskToEdit = inject<ApiTask | null>(MAT_DIALOG_DATA, { optional: true });
   readonly taskSaved = output<void>();
   protected loading = false;
+  protected readonly teamMembers = signal<Assignee[]>([]);
+  protected readonly membersLoading = signal(true);
 
   protected readonly statusOptions: { value: ApiTaskStatus; label: string }[] = [
     { value: 'todo', label: 'To Do' },
@@ -66,13 +76,25 @@ export class CreateTaskDialogComponent {
       status: [this.taskDto.status, Validators.required],
       priority: [this.taskDto.priority, Validators.required],
       dueDate: [this.taskDto.dueDate, Validators.required],
-      assigneeName: [
-        this.taskDto.assignee.name,
-        [Validators.required, Validators.pattern(/[\s\S]*\S[\s\S]*/)],
-      ],
       assigneeEmail: [this.taskDto.assignee.email, [Validators.required, Validators.email]],
       tags: [this.taskDto.tags],
     });
+  }
+
+  ngOnInit(): void {
+    this.teamData
+      .getMembers()
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        finalize(() => this.membersLoading.set(false)),
+      )
+      .subscribe(({ members }) => {
+        this.teamMembers.set(members);
+        const assigneeEmail = this.taskForm.controls['assigneeEmail'].value;
+        if (assigneeEmail && !members.some((member) => member.email === assigneeEmail)) {
+          this.taskForm.controls['assigneeEmail'].setValue('');
+        }
+      });
   }
 
   protected close(): void {
@@ -106,6 +128,14 @@ export class CreateTaskDialogComponent {
     }
 
     const value = this.taskForm.getRawValue();
+    const selectedAssignee = this.teamMembers().find(
+      (member) => member.email === value.assigneeEmail,
+    );
+    if (!selectedAssignee) {
+      this.taskForm.controls['assigneeEmail'].setErrors({ required: true });
+      this.taskForm.controls['assigneeEmail'].markAsTouched();
+      return;
+    }
     const request = new TaskDto({
       title: value.title.trim(),
       description: value.description.trim(),
@@ -114,8 +144,8 @@ export class CreateTaskDialogComponent {
       dueDate: value.dueDate,
       tags: value.tags,
       assignee: {
-        name: value.assigneeName.trim(),
-        email: value.assigneeEmail.trim(),
+        name: selectedAssignee.name,
+        email: selectedAssignee.email,
       },
     });
 
