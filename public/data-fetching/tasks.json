@@ -115,6 +115,25 @@
       "updatedAt": "2026-11-12T16:06:07.302Z"
     },
     {
+      "id": "task-6",
+      "title": "Fix mobile login issue",
+      "description": "Resolve the issue preventing users from logging in on mobile devices.",
+      "status": "done",
+      "priority": "medium",
+      "dueDate": "2026-11-10T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": "2026-11-14T18:05:53.498Z",
+      "assignee": {
+        "id": "user-3",
+        "name": "Mike Taylor",
+        "avatar": "",
+        "email": "mike@example.com"
+      },
+      "tags": ["Bug Fix", "Mobile"],
+      "createdAt": "2026-11-06T14:04:18.662Z",
+      "updatedAt": "2026-11-14T18:05:53.498Z"
+    },
+    {
       "id": "task-4",
       "title": "Update payment gateway integration",
       "description": "Migrate to the new payment provider API and update billing logic.",
@@ -191,25 +210,6 @@
       "updatedAt": "2026-11-13T14:13:07.947Z"
     },
     {
-      "id": "task-6",
-      "title": "Fix mobile login issue",
-      "description": "Resolve the issue preventing users from logging in on mobile devices.",
-      "status": "in_progress",
-      "priority": "medium",
-      "dueDate": "2026-11-10T14:04:18.662Z",
-      "isOverdue": true,
-      "completedAt": null,
-      "assignee": {
-        "id": "user-3",
-        "name": "Mike Taylor",
-        "avatar": "",
-        "email": "mike@example.com"
-      },
-      "tags": ["Bug Fix", "Mobile"],
-      "createdAt": "2026-11-06T14:04:18.662Z",
-      "updatedAt": "2026-11-14T08:47:56.771Z"
-    },
-    {
       "id": "task-1794413191260",
       "title": "test task",
       "description": "Description",
@@ -250,6 +250,6 @@
   ],
   "meta": {
     "totalCount": 13,
-    "lastUpdated": "2026-11-14T17:12:00.910Z"
+    "lastUpdated": "2026-11-14T18:05:53.498Z"
   }
 }

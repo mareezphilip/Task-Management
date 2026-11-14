@@ -1,4 +1,8 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -7,14 +11,15 @@ import Aura from '@primeuix/themes/aura';
 
 import { routes } from './app.routes';
 import { globalHttpInterceptorInterceptor } from './core/interceptors/GlobalHttpInterceptor/global-http-interceptor-interceptor';
+import { httpCacheInterceptor } from './core/interceptors/CacheInterceptor/http-cache.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([globalHttpInterceptorInterceptor])),
+    provideHttpClient(withInterceptors([httpCacheInterceptor, globalHttpInterceptorInterceptor])),
     provideAnimationsAsync(),
     providePrimeNG({ theme: { preset: Aura, options: { darkModeSelector: false } } }),
-  ]
+  ],
 };

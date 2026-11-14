@@ -14,7 +14,7 @@
       "id": "completed",
       "title": "Completed",
       "icon": "/assets/dashboard/completed.svg",
-      "value": 4,
+      "value": 5,
       "change": "+1",
       "changeLabel": "today",
       "changeType": "positive",
@@ -24,7 +24,7 @@
       "id": "in-progress",
       "title": "In Progress",
       "icon": "/assets/dashboard/inProgress.svg",
-      "value": 3,
+      "value": 2,
       "change": "Active",
       "changeLabel": "right now",
       "changeType": "neutral",
@@ -34,12 +34,12 @@
       "id": "overdue",
       "title": "Overdue",
       "icon": "/assets/dashboard/overdue.svg",
-      "value": 3,
+      "value": 2,
       "change": "Needs attention",
       "changeLabel": "past due",
       "changeType": "negative",
       "color": "red"
     }
   ],
-  "lastUpdated": "2026-11-14T17:12:00.910Z"
+  "lastUpdated": "2026-11-14T18:05:53.498Z"
 }
