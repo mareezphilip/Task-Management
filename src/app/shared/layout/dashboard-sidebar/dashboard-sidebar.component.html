@@ -1,8 +1,36 @@
-<aside class="sidebar" aria-label="Main navigation">
+<aside class="sidebar" [class.collapsed]="collapsed()" aria-label="Main navigation">
+  <div class="d-flex">
+    <button
+      class="collapse-toggle"
+      type="button"
+      [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+      [attr.aria-expanded]="!collapsed()"
+      (click)="toggleRequested.emit()"
+    >
+      <img
+        class="collapse-arrow"
+        [class.rotated]="collapsed()"
+        src="/assets/sidebar/headarrow.svg"
+        alt=""
+        aria-hidden="true"
+      />
+    </button>
+  </div>
+
   <nav class="nav-list">
     @for (item of items; track item.label) {
-      <app-labeled-button [image]="item.icon" [label]="item.label" [route]="item.route" />
+      <app-labeled-button
+        [image]="item.icon"
+        [label]="item.label"
+        [collapsed]="collapsed()"
+        [route]="item.route"
+      />
     }
   </nav>
-  <button class="new-task"><span aria-hidden="true">＋</span> New Task</button>
+  <button class="new-task" type="button" [attr.aria-label]="collapsed() ? 'New task' : null">
+    <span aria-hidden="true">＋</span>
+    @if (!collapsed()) {
+      New Task
+    }
+  </button>
 </aside>

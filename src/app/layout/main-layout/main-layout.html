@@ -1,7 +1,7 @@
 <div class="app-shell">
   <app-dashboard-header (searchChanged)="searchChanged($event)" />
-  <div class="workspace">
-    <app-dashboard-sidebar />
+  <div class="workspace" [class.sidebar-collapsed]="sidebarCollapsed()">
+    <app-dashboard-sidebar [collapsed]="sidebarCollapsed()" (toggleRequested)="toggleSidebar()" />
     <main class="routed-content">
       <router-outlet />
     </main>

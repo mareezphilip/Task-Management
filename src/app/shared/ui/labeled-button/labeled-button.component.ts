@@ -13,4 +13,5 @@ export class LabeledButtonComponent {
   readonly image = input.required<string>();
   readonly label = input.required<string>();
   readonly route = input<string | null>(null);
+  readonly collapsed = input(false);
 }

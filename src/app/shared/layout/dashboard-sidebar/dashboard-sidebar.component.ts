@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { LabeledButtonComponent } from '../../ui/labeled-button/labeled-button.component';
 @Component({
   selector: 'app-dashboard-sidebar',
@@ -9,6 +9,8 @@ import { LabeledButtonComponent } from '../../ui/labeled-button/labeled-button.c
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardSidebarComponent {
+  readonly collapsed = input(false);
+  readonly toggleRequested = output<void>();
   protected readonly items = [
     { label: 'Dashboard', icon: '/assets/sidebar/dashboard.svg', route: '/' },
     { label: 'Tasks', icon: '/assets/sidebar/tasks.svg', route: null },

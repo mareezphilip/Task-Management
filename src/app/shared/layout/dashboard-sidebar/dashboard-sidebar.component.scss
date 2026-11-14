@@ -1,5 +1,124 @@
-:host { display: block; }
-    .sidebar { min-height: 100%; padding: 18px 16px; background: #fff; border-right: 1px solid #e8ebf0; }
-    .nav-list { display: grid; gap: 4px; }
-    .new-task { width: 100%; margin-top: 28px; padding: 9px; color: white; background: #1976d2; border: 0; border-radius: 4px; font-size: 12px; }
-    @media (max-width: 760px) { .sidebar { padding: 10px; border-right: 0; border-bottom: 1px solid #e8ebf0; } .nav-list { display: flex; overflow-x: auto; } .nav-item { flex: 0 0 auto; } .new-task { margin-top: 10px; } }
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.sidebar {
+  min-height: 100%;
+  padding: 14px 12px;
+  background: #fff;
+  border-right: 1px solid #e8ebf0;
+}
+
+.collapse-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 7px;
+  width: 100%;
+  min-height: 30px;
+  margin-bottom: 12px;
+  padding: 0 5px;
+  border: 0;
+  border-radius: 5px;
+  background: transparent;
+  color: #697482;
+  font-size: 11px;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.collapse-toggle:hover {
+  background: #eef3f8;
+  color: #1976d2;
+}
+
+.collapse-toggle:focus-visible {
+  outline: 2px solid #1976d2;
+  outline-offset: 2px;
+}
+
+.collapse-arrow {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  pointer-events: painted;
+  transition: transform 180ms ease;
+}
+
+.collapse-arrow.rotated {
+  transform: rotate(180deg);
+}
+
+.nav-list {
+  display: grid;
+  gap: 4px;
+}
+
+.new-task {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 36px;
+  margin-top: 28px;
+  padding: 8px;
+  color: white;
+  background: #1976d2;
+  border: 0;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.new-task span {
+  font-size: 16px;
+}
+
+.sidebar.collapsed {
+  padding-right: 9px;
+  padding-left: 9px;
+}
+
+.sidebar.collapsed .collapse-toggle {
+  justify-content: center;
+}
+
+.sidebar.collapsed .new-task {
+  min-height: 36px;
+  padding: 0;
+}
+
+@media (max-width: 760px) {
+  .sidebar {
+    padding: 7px 10px;
+    border-right: 0;
+    border-bottom: 1px solid #e8ebf0;
+  }
+
+  .collapse-toggle {
+    justify-content: flex-end;
+    min-height: 26px;
+    margin: 0 0 6px;
+  }
+
+  .nav-list {
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .nav-list app-labeled-button {
+    flex: 0 0 auto;
+  }
+
+  .new-task {
+    width: auto;
+    margin: 8px 0 0 auto;
+    padding: 7px 12px;
+  }
+
+  .sidebar.collapsed .nav-list {
+    justify-content: space-between;
+  }
+}

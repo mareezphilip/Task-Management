@@ -10,6 +10,10 @@
   display: grid;
   grid-template-columns: 204px minmax(0, 1fr);
   min-height: calc(100vh - 64px);
+  transition: grid-template-columns 180ms ease;
+}
+.workspace.sidebar-collapsed {
+  grid-template-columns: 68px minmax(0, 1fr);
 }
 .routed-content {
   min-width: 0;
@@ -18,5 +22,8 @@
   .workspace {
     grid-template-columns: 1fr;
     min-height: auto;
+  }
+  .workspace.sidebar-collapsed {
+    grid-template-columns: 1fr;
   }
 }

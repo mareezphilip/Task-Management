@@ -4,13 +4,24 @@
     [routerLink]="path"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
+    [attr.aria-label]="label()"
+    [title]="collapsed() ? label() : null"
   >
     <img class="button-image" [src]="image()" alt="" aria-hidden="true" />
-    <span>{{ label() }}</span>
+    @if (!collapsed()) {
+      <span>{{ label() }}</span>
+    }
   </a>
 } @else {
-  <button class="labeled-button" type="button">
+  <button
+    class="labeled-button"
+    type="button"
+    [attr.aria-label]="label()"
+    [title]="collapsed() ? label() : null"
+  >
     <img class="button-image" [src]="image()" alt="" aria-hidden="true" />
-    <span>{{ label() }}</span>
+    @if (!collapsed()) {
+      <span>{{ label() }}</span>
+    }
   </button>
 }
