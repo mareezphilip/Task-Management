@@ -1,0 +1,26 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: .Dockerfile
+      target: api
+    expose:
+      - "3001"
+    volumes:
+      - task-data:/app/public/data-fetching
+    restart: unless-stopped
+
+  web:
+    build:
+      context: .
+      dockerfile: .Dockerfile
+      target: web
+    depends_on:
+      api:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+volumes:
+  task-data:
