@@ -9,13 +9,14 @@ describe('ConfirmDialogComponent', () => {
   const data: ConfirmDialogData = {
     title: 'Delete task?',
     message: 'This task will be permanently deleted.',
-    confirmLabel: 'Delete task',
-    cancelLabel: 'Keep task',
     danger: true,
   };
 
   beforeEach(async () => {
-    dialogRef = jasmine.createSpyObj<MatDialogRef<ConfirmDialogComponent, boolean>>('MatDialogRef', ['close']);
+    dialogRef = jasmine.createSpyObj<MatDialogRef<ConfirmDialogComponent, boolean>>(
+      'MatDialogRef',
+      ['close'],
+    );
     await TestBed.configureTestingModule({
       imports: [ConfirmDialogComponent],
       providers: [
@@ -28,13 +29,13 @@ describe('ConfirmDialogComponent', () => {
     fixture.detectChanges();
   });
 
-  it('renders the supplied title, message, and button labels', () => {
+  it('renders the title, message, and default button labels', () => {
     const element: HTMLElement = fixture.nativeElement;
 
     expect(element.querySelector('h2')?.textContent).toContain('Delete task?');
     expect(element.querySelector('mat-dialog-content')?.textContent).toContain(data.message);
-    expect(element.querySelector('.cancel-button')?.textContent).toContain('Keep task');
-    expect(element.querySelector('.confirm-button')?.textContent).toContain('Delete task');
+    expect(element.querySelector('.cancel-button')?.textContent).toContain('No');
+    expect(element.querySelector('.confirm-button')?.textContent).toContain('Yes');
     expect(element.querySelector('.confirm-button')?.classList).toContain('danger-button');
   });
 
