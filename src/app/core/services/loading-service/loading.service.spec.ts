@@ -2,8 +2,8 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { HttpClient, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { globalHttpInterceptorInterceptor } from '../../../interceptors/GlobalHttpInterceptor/global-http-interceptor-interceptor';
-import { GlobalErrorHandler } from '../global-error-handler';
+import { globalHttpInterceptorInterceptor } from '../../interceptors/GlobalHttpInterceptor/global-http-interceptor-interceptor';
+import { GlobalErrorHandler } from '../globalErrorHandler/global-error-handler';
 import { LoadingService } from './loading.service';
 
 describe('HTTP loading', () => {
@@ -17,7 +17,10 @@ describe('HTTP loading', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(withInterceptors([globalHttpInterceptorInterceptor])),
         provideHttpClientTesting(),
-        { provide: GlobalErrorHandler, useValue: { handleError: jasmine.createSpy('handleError') } },
+        {
+          provide: GlobalErrorHandler,
+          useValue: { handleError: jasmine.createSpy('handleError') },
+        },
       ],
     });
     client = TestBed.inject(HttpClient);

@@ -1,10 +1,10 @@
 <main class="main-content">
   @if (loading.isLoading()) {
-    <p class="data-message" role="status">Loading dashboard data…</p>
+    <p class="data-message" role="status">{{ 'dashboard.loading' | translate }}</p>
   }
   <app-statistics-cards [metrics]="metrics()" />
-  <section class="board-toolbar" aria-label="Task board controls">
-    <div class="filters" aria-label="Task status filters">
+  <section class="board-toolbar" [attr.aria-label]="'board.controls' | translate">
+    <div class="filters" [attr.aria-label]="'board.filters' | translate">
       @for (filter of filters; track filter.status) {
         <button
           type="button"
@@ -12,19 +12,19 @@
           [attr.aria-pressed]="activeFilter() === filter.status"
           (click)="selectFilter(filter.status)"
         >
-          {{ filter.label }}
+          {{ filter.label | translate }}
         </button>
       }
     </div>
     <div class="board-actions">
       <p-select
-        [options]="priorityOptions"
+        [options]="priorityOptions()"
         optionLabel="label"
         optionValue="value"
         [ngModel]="selectedPriority()"
         (ngModelChange)="selectedPriority.set($event)"
-        ariaLabel="Filter by priority"
-        placeholder="Priority"
+        [ariaLabel]="'task.filter.priority' | translate"
+        [placeholder]="'task.filter.priorityPlaceholder' | translate"
         appendTo="body"
         styleClass="task-filter-select"
       />
@@ -34,12 +34,14 @@
         optionValue="value"
         [ngModel]="selectedAssignee()"
         (ngModelChange)="selectedAssignee.set($event)"
-        ariaLabel="Filter by assignee name"
-        placeholder="Assignee"
+        [ariaLabel]="'task.filter.assignee' | translate"
+        [placeholder]="'task.filter.assigneePlaceholder' | translate"
         appendTo="body"
         styleClass="task-filter-select"
       />
-      <button class="create-button" type="button" (click)="openCreateForm()">＋ New Task</button>
+      <button class="create-button" type="button" (click)="openCreateForm()">
+        ＋ {{ 'task.new' | translate }}
+      </button>
     </div>
   </section>
   <div class="board-workspace">

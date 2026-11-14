@@ -39,25 +39,6 @@
       "updatedAt": "2026-11-12T12:23:33.942Z"
     },
     {
-      "id": "task-1794413191260",
-      "title": "test task",
-      "description": "Description",
-      "status": "todo",
-      "priority": "medium",
-      "dueDate": "2026-11-21T00:00:00.000Z",
-      "isOverdue": false,
-      "completedAt": null,
-      "assignee": {
-        "id": "user-1794413191260",
-        "name": "mareez philip",
-        "avatar": "",
-        "email": "mareezphilip7@gmail.com"
-      },
-      "tags": ["Development"],
-      "createdAt": "2026-11-11T16:06:31.260Z",
-      "updatedAt": "2026-11-11T16:06:31.260Z"
-    },
-    {
       "id": "task-1794431900438",
       "title": "testttt",
       "description": "desc",
@@ -229,6 +210,25 @@
       "updatedAt": "2026-11-14T08:47:56.771Z"
     },
     {
+      "id": "task-1794413191260",
+      "title": "test task",
+      "description": "Description",
+      "status": "in_progress",
+      "priority": "medium",
+      "dueDate": "2026-11-21T00:00:00.000Z",
+      "isOverdue": false,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1794413191260",
+        "name": "mareez philip",
+        "avatar": "",
+        "email": "mareezphilip7@gmail.com"
+      },
+      "tags": ["Development"],
+      "createdAt": "2026-11-11T16:06:31.260Z",
+      "updatedAt": "2026-11-14T16:42:03.426Z"
+    },
+    {
       "id": "task-2",
       "title": "Design new homepage layout",
       "description": "Create wireframes and mockups for the homepage redesign.",
@@ -250,6 +250,6 @@
   ],
   "meta": {
     "totalCount": 13,
-    "lastUpdated": "2026-11-14T09:22:23.471Z"
+    "lastUpdated": "2026-11-14T17:12:00.910Z"
   }
 }

@@ -1,11 +1,13 @@
 <article class="task-card" [class.overdue]="task().overdue">
   <div class="card-heading">
-    <span [class]="'priority ' + task().priority">{{ task().priority }}</span>
+    <span [class]="'priority ' + task().priority">{{
+      'priority.' + task().priority | translate
+    }}</span>
     <div class="task-menu-wrap">
       <button
         class="more"
         type="button"
-        aria-label="More task options"
+        [attr.aria-label]="'task.more' | translate"
         [attr.aria-expanded]="menuOpen"
         (click)="menuOpen = !menuOpen"
       >
@@ -13,9 +15,10 @@
       </button>
       @if (menuOpen) {
         <div class="task-menu" role="menu">
-          <button type="button" role="menuitem" (click)="editTask()">Edit task</button
+          <button type="button" role="menuitem" (click)="editTask()">
+            {{ 'task.edit' | translate }}</button
           ><button type="button" role="menuitem" class="delete-action" (click)="deleteTask()">
-            Delete Task
+            {{ 'task.delete' | translate }}
           </button>
         </div>
       }
@@ -25,13 +28,19 @@
   <p class="description">{{ task().description }}</p>
   <div class="due d-flex" [class.late]="task().overdue">
     @if (task().overdue) {
-      <img src="/assets/dashboard/overdue.svg" alt="Overdue icon" />
+      <img src="/assets/dashboard/overdue.svg" alt="" />
     } @else if (task().status === 'done') {
-      <img src="/assets/dashboard/completed.svg" alt="Completed icon" />
+      <img src="/assets/dashboard/completed.svg" alt="" />
     } @else if (task().status === 'in-progress' || task().status === 'todo') {
-      <img src="/assets/sidebar/calendar.svg" alt="In Progress icon" />
+      <img src="/assets/sidebar/calendar.svg" alt="" />
     }
-    <p>{{ task().dueLabel }}</p>
+    <p>
+      {{
+        task().dueKey
+          ? ('due.' + task().dueKey | translate: { count: task().dueDays ?? 1 })
+          : task().dueLabel
+      }}
+    </p>
   </div>
   <p class="category">{{ task().category }}</p>
   <div class="card-footer">

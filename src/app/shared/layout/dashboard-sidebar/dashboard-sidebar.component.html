@@ -1,9 +1,13 @@
-<aside class="sidebar" [class.collapsed]="collapsed()" aria-label="Main navigation">
+<aside
+  class="sidebar"
+  [class.collapsed]="collapsed()"
+  [attr.aria-label]="'navigation.main' | translate"
+>
   <div class="d-flex">
     <button
       class="collapse-toggle"
       type="button"
-      [attr.aria-label]="collapsed() ? 'Expand sidebar' : 'Collapse sidebar'"
+      [attr.aria-label]="(collapsed() ? 'navigation.expand' : 'navigation.collapse') | translate"
       [attr.aria-expanded]="!collapsed()"
       (click)="toggleRequested.emit()"
     >
@@ -21,16 +25,20 @@
     @for (item of items; track item.label) {
       <app-labeled-button
         [image]="item.icon"
-        [label]="item.label"
+        [label]="item.label | translate"
         [collapsed]="collapsed()"
         [route]="item.route"
       />
     }
   </nav>
-  <button class="new-task" type="button" [attr.aria-label]="collapsed() ? 'New task' : null">
+  <button
+    class="new-task"
+    type="button"
+    [attr.aria-label]="collapsed() ? ('task.new' | translate) : null"
+  >
     <span aria-hidden="true">＋</span>
     @if (!collapsed()) {
-      New Task
+      {{ 'task.new' | translate }}
     }
   </button>
 </aside>

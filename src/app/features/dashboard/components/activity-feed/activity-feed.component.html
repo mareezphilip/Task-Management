@@ -1,8 +1,8 @@
 <section class="activity-feed" aria-labelledby="activity-title">
   <div class="activity-heading">
     <div>
-      <h2 id="activity-title">Recent Activity</h2>
-      <p>Latest changes across your tasks</p>
+      <h2 id="activity-title">{{ 'activity.title' | translate }}</h2>
+      <p>{{ 'activity.subtitle' | translate }}</p>
     </div>
   </div>
   @if (recentActivities().length) {
@@ -12,6 +12,6 @@
       }
     </div>
   } @else {
-    <p class="activity-empty">No recent task activity yet.</p>
+    <p class="activity-empty">{{ 'activity.empty' | translate }}</p>
   }
 </section>

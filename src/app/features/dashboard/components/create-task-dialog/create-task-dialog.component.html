@@ -1,7 +1,7 @@
-<h2 mat-dialog-title>{{ taskToEdit ? 'Edit task' : 'Create task' }}</h2>
+<h2 mat-dialog-title>{{ (taskToEdit ? 'task.edit' : 'task.create') | translate }}</h2>
 <mat-dialog-content>
   <form [formGroup]="taskForm" class="create-form" (ngSubmit)="submitTask()">
-    <label for="task-title">Title</label>
+    <label for="task-title">{{ 'task.title' | translate }}</label>
     <input
       pInputText
       id="task-title"
@@ -14,13 +14,13 @@
       <small id="task-title-error" class="field-error" role="alert">
         {{
           taskForm.controls['title'].hasError('maxlength')
-            ? 'Title must be 120 characters or fewer.'
-            : 'Please enter a task title.'
+            ? ('task.titleMaxError' | translate)
+            : ('task.titleError' | translate)
         }}
       </small>
     }
 
-    <label for="task-description">Description</label>
+    <label for="task-description">{{ 'task.description' | translate }}</label>
     <textarea
       id="task-description"
       formControlName="description"
@@ -31,47 +31,49 @@
       aria-describedby="task-description-error"
     ></textarea>
     @if (taskForm.controls['description'].invalid && taskForm.controls['description'].touched) {
-      <small id="task-description-error" class="field-error" role="alert"
-        >Please enter a description.</small
-      >
+      <small id="task-description-error" class="field-error" role="alert">{{
+        'task.descriptionError' | translate
+      }}</small>
     }
 
     <div class="form-row">
       <div class="field">
-        <label for="task-status">Status</label>
+        <label for="task-status">{{ 'task.status' | translate }}</label>
         <p-select
           inputId="task-status"
           formControlName="status"
-          [options]="statusOptions"
+          [options]="statusOptions()"
           optionLabel="label"
           optionValue="value"
           aria-describedby="status-error"
         />
         @if (taskForm.controls['status'].invalid && taskForm.controls['status'].touched) {
-          <small id="status-error" class="field-error" role="alert">Please select a status.</small>
+          <small id="status-error" class="field-error" role="alert">{{
+            'task.statusError' | translate
+          }}</small>
         }
       </div>
       <div class="field">
-        <label for="task-priority">Priority</label>
+        <label for="task-priority">{{ 'task.priority' | translate }}</label>
         <p-select
           inputId="task-priority"
           formControlName="priority"
-          [options]="priorityOptions"
+          [options]="priorityOptions()"
           optionLabel="label"
           optionValue="value"
           aria-describedby="priority-error"
         />
         @if (taskForm.controls['priority'].invalid && taskForm.controls['priority'].touched) {
-          <small id="priority-error" class="field-error" role="alert"
-            >Please select a priority.</small
-          >
+          <small id="priority-error" class="field-error" role="alert">{{
+            'task.priorityError' | translate
+          }}</small>
         }
       </div>
     </div>
 
     <div class="form-row">
       <div class="field">
-        <label for="task-due-date">Due date</label>
+        <label for="task-due-date">{{ 'task.dueDate' | translate }}</label>
         <input
           pInputText
           id="task-due-date"
@@ -83,13 +85,13 @@
           aria-describedby="task-due-date-error"
         />
         @if (taskForm.controls['dueDate'].invalid && taskForm.controls['dueDate'].touched) {
-          <small id="task-due-date-error" class="field-error" role="alert"
-            >Please select a valid due date.</small
-          >
+          <small id="task-due-date-error" class="field-error" role="alert">{{
+            'task.dueDateError' | translate
+          }}</small>
         }
       </div>
       <div class="field">
-        <label for="task-assignee">Assignee</label>
+        <label for="task-assignee">{{ 'task.assignee' | translate }}</label>
         <p-select
           inputId="task-assignee"
           formControlName="assigneeEmail"
@@ -98,7 +100,7 @@
           optionValue="email"
           [loading]="membersLoading()"
           [disabled]="membersLoading() || teamMembers().length === 0"
-          placeholder="Select a team member"
+          [placeholder]="'task.selectMember' | translate"
           [attr.aria-invalid]="
             taskForm.controls['assigneeEmail'].invalid && taskForm.controls['assigneeEmail'].touched
           "
@@ -117,19 +119,19 @@
         @if (
           taskForm.controls['assigneeEmail'].invalid && taskForm.controls['assigneeEmail'].touched
         ) {
-          <small id="task-assignee-error" class="field-error" role="alert"
-            >Please select a team member.</small
-          >
+          <small id="task-assignee-error" class="field-error" role="alert">{{
+            'task.selectMemberError' | translate
+          }}</small>
         } @else if (!membersLoading() && teamMembers().length === 0) {
-          <small id="task-assignee-error" class="field-error" role="alert"
-            >No team members are available.</small
-          >
+          <small id="task-assignee-error" class="field-error" role="alert">{{
+            'task.noMembers' | translate
+          }}</small>
         }
       </div>
     </div>
 
     <fieldset class="tag-fieldset">
-      <legend>Tags</legend>
+      <legend>{{ 'task.tags' | translate }}</legend>
       <div class="tag-options">
         @for (tag of tagOptions; track tag) {
           <div class="tag-option">
@@ -142,10 +144,10 @@
 
     <div class="form-actions">
       <button type="button" class="cancel-button" [disabled]="loading" (click)="close()">
-        Cancel
+        {{ 'task.cancel' | translate }}
       </button>
       <button type="submit" class="save-button" [disabled]="loading">
-        {{ loading ? 'Saving…' : taskToEdit ? 'Save changes' : 'Save task' }}
+        {{ (loading ? 'task.saving' : taskToEdit ? 'task.saveChanges' : 'task.save') | translate }}
       </button>
     </div>
   </form>

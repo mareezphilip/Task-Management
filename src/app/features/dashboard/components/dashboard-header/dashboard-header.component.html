@@ -1,11 +1,31 @@
 <header class="topbar">
-  <a class="brand" href="/" aria-label="Task Manager home"><span class="brand-mark">▦</span><span>Task
-      Manager</span></a>
-  <label class="search"><span aria-hidden="true">⌕</span><input type="search" placeholder="Search tasks..."
-      aria-label="Search tasks" (input)="onSearchInput($event)"></label>
+  <a class="brand" href="/" [attr.aria-label]="'brand.home' | translate"
+    ><span class="brand-mark">▦</span><span>{{ 'brand.name' | translate }}</span></a
+  >
+  <label class="search"
+    ><span aria-hidden="true">⌕</span
+    ><input
+      type="search"
+      [placeholder]="'search.tasks' | translate"
+      [attr.aria-label]="'search.tasks.label' | translate"
+      (input)="onSearchInput($event)"
+  /></label>
   <div class="header-actions">
-    <button class="icon-button" aria-label="Notifications"><img
-        src="/assets/header/notifications.svg" alt="" aria-hidden="true"></button>
-        <button class="profile"
-      aria-label="User profile">JD</button></div>
+    <button
+      class="language-button"
+      type="button"
+      [attr.aria-label]="'language.switch' | translate"
+      (click)="i18n.toggleLanguage()"
+    >
+      {{
+        i18n.language() === 'en'
+          ? ('language.arabic' | translate)
+          : ('language.english' | translate)
+      }}
+    </button>
+    <button class="icon-button" [attr.aria-label]="'header.notifications' | translate">
+      <img src="/assets/header/notifications.svg" alt="" aria-hidden="true" />
+    </button>
+    <button class="profile" [attr.aria-label]="'header.profile' | translate">JD</button>
+  </div>
 </header>

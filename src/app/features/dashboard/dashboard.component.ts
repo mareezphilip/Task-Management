@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../core/pipes/translate.pipe';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -25,12 +26,15 @@ import {
 } from './models/task.model';
 import { DashboardDataService } from './services/dashboard-data.service';
 import { DashboardSearchService } from './services/dashboard-search.service';
+import { TaskLocalizationService } from './services/task-localization.service';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { StatisticsCardsComponent } from './components/statistics-cards/statistics-cards.component';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
 import { ActivityFeedComponent } from './components/activity-feed/activity-feed.component';
 import { ConfirmDialogComponent } from '../../shared/ui/confirm-dialog/confirm-dialog.component';
-import { LoadingService } from '../../core/services/globalErrorHandler/loading-service/loading.service';
+import { LoadingService } from '../../core/services/loading-service/loading.service';
+
+import { I18nService } from '../../core/services/i18n/i18n.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -39,6 +43,7 @@ import { LoadingService } from '../../core/services/globalErrorHandler/loading-s
     MatDialogModule,
     FormsModule,
     SelectModule,
+    TranslatePipe,
     StatisticsCardsComponent,
     TaskBoardComponent,
     ActivityFeedComponent,
@@ -51,6 +56,8 @@ export class DashboardComponent implements OnInit {
   private readonly dashboardData = inject(DashboardDataService);
   private readonly dashboardSearch = inject(DashboardSearchService);
   private readonly dialog = inject(MatDialog);
+  private readonly i18n = inject(I18nService);
+  private readonly taskLocalization = inject(TaskLocalizationService);
   private readonly destroyRef = inject(DestroyRef);
   private readonly changeDetector = inject(ChangeDetectorRef);
   protected readonly loading = inject(LoadingService);
@@ -59,8 +66,16 @@ export class DashboardComponent implements OnInit {
   private readonly optimisticTasks = signal<Task[] | null>(null);
   protected readonly tasks = computed(() => {
     const search = this.dashboardSearch.searchTerm().toLowerCase();
+    const sourceTasks = this.dashboardData.tasks();
+    const sourceById = new Map(sourceTasks.map((task) => [task.id, task]));
+    const optimisticTasks = this.optimisticTasks();
     return (
-      this.optimisticTasks() ?? this.dashboardData.tasks().map((task) => this.toDashboardTask(task))
+      optimisticTasks
+        ? optimisticTasks.map((task) => {
+            const source = sourceById.get(task.id);
+            return source ? { ...this.toDashboardTask(source), status: task.status } : task;
+          })
+        : sourceTasks.map((task) => this.toDashboardTask(task))
     )
       .filter(
         (task) =>
@@ -77,12 +92,15 @@ export class DashboardComponent implements OnInit {
         (task) => !search || `${task.title} ${task.description}`.toLowerCase().includes(search),
       );
   });
-  protected readonly priorityOptions: { label: string; value: TaskPriority | 'all' }[] = [
-    { label: 'All priorities', value: 'all' },
-    ...TASK_PRIORITY_OPTIONS,
-  ];
+  protected readonly priorityOptions = computed(() => [
+    { label: this.i18n.translate('task.filter.allPriorities'), value: 'all' as const },
+    ...TASK_PRIORITY_OPTIONS.map((option) => ({
+      ...option,
+      label: this.i18n.translate(`priority.${option.value}`),
+    })),
+  ]);
   protected readonly assigneeOptions = computed(() => [
-    { label: 'All assignees', value: 'all' },
+    { label: this.i18n.translate('task.filter.allAssignees'), value: 'all' },
     ...Array.from(
       new Set(
         this.dashboardData
@@ -98,6 +116,7 @@ export class DashboardComponent implements OnInit {
     const tasks = this.dashboardData.tasks();
     return this.statistics().map((metric) => ({
       ...metric,
+      caption: this.translateMetricCaption(metric.caption),
       value:
         metric.label === 'Total Tasks'
           ? tasks.length
@@ -115,10 +134,10 @@ export class DashboardComponent implements OnInit {
   protected readonly selectedPriority = signal<TaskPriority | 'all'>('all');
   protected readonly selectedAssignee = signal<string>('all');
   protected readonly filters: { label: string; status: ApiTaskStatus | 'all' }[] = [
-    { label: 'All', status: 'all' },
-    { label: 'To Do', status: 'todo' },
-    { label: 'In Progress', status: 'in_progress' },
-    { label: 'Completed', status: 'done' },
+    { label: 'filter.all', status: 'all' },
+    { label: 'filter.todo', status: 'todo' },
+    { label: 'filter.progress', status: 'in_progress' },
+    { label: 'filter.completed', status: 'done' },
   ];
 
   ngOnInit(): void {
@@ -153,8 +172,8 @@ export class DashboardComponent implements OnInit {
     const confirmationRef = this.dialog.open(ConfirmDialogComponent, {
       width: 'min(26rem, 90vw)',
       data: {
-        title: 'Delete task',
-        message: `Are you sure you want to delete the ${task.title}? task`,
+        title: this.i18n.translate('confirm.deleteTitle'),
+        message: this.i18n.translate('confirm.deleteMessage'),
         danger: true,
       },
     });
@@ -223,14 +242,24 @@ export class DashboardComponent implements OnInit {
           : daysUntilDue === 0
             ? 'Due today'
             : `Due in ${daysUntilDue} day${daysUntilDue === 1 ? '' : 's'}`;
+    const dueKey: Task['dueKey'] =
+      task.status === 'done'
+        ? 'completed'
+        : task.isOverdue
+          ? 'overdueDays'
+          : daysUntilDue === 0
+            ? 'today'
+            : 'inDays';
 
     return {
       id: task.id,
-      title: task.title,
-      description: task.description,
+      title: this.taskLocalization.translate(task.title),
+      description: this.taskLocalization.translate(task.description),
       priority: task.priority,
       status: task.status === 'in_progress' ? 'in-progress' : task.status,
       dueLabel,
+      dueKey,
+      dueDays: Math.max(1, Math.abs(daysUntilDue)),
       category: task.tags[0] ?? 'General',
       assignee: {
         name: task.assignee.name.split(' ')[0],
@@ -248,6 +277,12 @@ export class DashboardComponent implements OnInit {
 
   private metricTone(color: string): DashboardMetric['tone'] {
     return color === 'green' || color === 'slate' || color === 'red' ? color : 'blue';
+  }
+
+  private translateMetricCaption(caption: string): string {
+    const numericPrefix = caption.match(/^([+-]?\d+)\s+(.+)$/);
+    if (!numericPrefix) return this.i18n.translate(`metric.caption.${caption}`);
+    return `${numericPrefix[1]} ${this.i18n.translate(`metric.caption.${numericPrefix[2]}`)}`;
   }
 
   private toApiStatus(status: TaskStatus): ApiTaskStatus {

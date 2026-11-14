@@ -1,25 +1,25 @@
 <main class="team-page">
   <header class="page-heading">
     <div>
-      <p class="eyebrow">Workspace</p>
-      <h1>Team</h1>
-      <p class="subtitle">Manage the people working on your tasks.</p>
+      <p class="eyebrow">{{ 'team.workspace' | translate }}</p>
+      <h1>{{ 'team.title' | translate }}</h1>
+      <p class="subtitle">{{ 'team.subtitle' | translate }}</p>
     </div>
-    <span class="member-count">{{ members().length }} members</span>
+    <span class="member-count">{{ members().length }} {{ 'team.members' | translate }}</span>
   </header>
 
   <section class="team-panel" aria-label="Team members">
     <div class="panel-heading">
       <div>
-        <h2>Team members</h2>
-        <p>Everyone in your workspace.</p>
+        <h2>{{ 'team.members' | translate }}</h2>
+        <p>{{ 'team.everyone' | translate }}</p>
       </div>
       <label class="search-field">
         <span aria-hidden="true">⌕</span>
         <input
           type="search"
-          placeholder="Search members"
-          aria-label="Search team members"
+          [placeholder]="'team.search' | translate"
+          [attr.aria-label]="'team.searchLabel' | translate"
           [value]="search()"
           (input)="search.set($any($event.target).value)"
         />
@@ -41,12 +41,12 @@
               <span class="member-name">{{ member.name }}</span>
               <span class="member-email">{{ member.email }}</span>
             </div>
-            <span class="member-role">Member</span>
+            <span class="member-role">{{ 'team.member' | translate }}</span>
           </li>
         }
       </ul>
     } @else {
-      <p class="empty-state">No team members match “{{ search() }}”.</p>
+      <p class="empty-state">{{ 'team.empty' | translate }} “{{ search() }}”.</p>
     }
   </section>
 </main>

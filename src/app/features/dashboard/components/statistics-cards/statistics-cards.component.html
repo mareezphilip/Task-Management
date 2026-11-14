@@ -1,8 +1,13 @@
-<section class="metrics" aria-label="Task statistics">
-      @for (metric of metrics(); track metric.label) {
-        <article class="metric-card">
-          <div class="metric-label"><img class="metric-icon" [src]="metric.icon" alt="" aria-hidden="true">{{ metric.label }}</div>
-          <strong>{{ metric.value }}</strong><small [class]="'caption ' + metric.tone">{{ metric.caption }}</small>
-        </article>
-      }
+<section class="metrics" [attr.aria-label]="'stats.label' | translate">
+  @for (metric of metrics(); track metric.label) {
+    <article class="metric-card">
+      <div class="metric-label">
+        <img class="metric-icon" [src]="metric.icon" alt="" aria-hidden="true" />{{
+          'metric.' + metric.label | translate
+        }}
+      </div>
+      <strong>{{ metric.value }}</strong
+      ><small [class]="'caption ' + metric.tone">{{ metric.caption }}</small>
+    </article>
+  }
 </section>

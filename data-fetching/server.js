@@ -1,6 +1,9 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
+const { Buffer } = require('node:buffer');
+
+const translationCache = new Map();
 
 const dataDirectory = path.resolve(__dirname, '../public/data-fetching');
 const tasksPath = path.join(dataDirectory, 'tasks.json');
@@ -47,6 +50,73 @@ function readRequestBody(request) {
 
 const server = http.createServer(async (request, response) => {
   const url = new URL(request.url, 'http://localhost');
+
+  if (url.pathname === '/api/translations' && request.method === 'POST') {
+    try {
+      const input = await readRequestBody(request);
+      if (input.target !== 'ar' || !Array.isArray(input.texts) ||
+          input.texts.length === 0 || input.texts.length > 50 ||
+          input.texts.some((text) => typeof text !== 'string' || !text.trim() || text.length > 10000)) {
+        sendJson(response, 400, { message: 'Provide 1–50 texts (up to 10000 characters each) and target ar.' });
+        return;
+      }
+      const translations = new Array(input.texts.length);
+      let nextIndex = 0;
+      // Limit concurrent provider requests and cache by content, never by task ID.
+      await Promise.all(Array.from({ length: Math.min(3, input.texts.length) }, async () => {
+        while (nextIndex < input.texts.length) {
+          const index = nextIndex++;
+          const text = input.texts[index];
+          if (translationCache.has(text)) {
+            translations[index] = translationCache.get(text);
+            continue;
+          }
+          // Arabic content can already be displayed directly.
+          if (!/[a-z]/i.test(text)) {
+            translations[index] = text;
+            continue;
+          }
+          const parts = [];
+          let remaining = text;
+          while (remaining) {
+            let end = 0;
+            let bytes = 0;
+            for (const character of remaining) {
+              bytes += Buffer.byteLength(character, 'utf8');
+              if (bytes > 450) break;
+              end += character.length;
+            }
+            if (end < remaining.length) {
+              const space = remaining.lastIndexOf(' ', end);
+              if (space > end / 2) end = space + 1;
+            }
+            const segment = remaining.slice(0, end);
+            remaining = remaining.slice(end);
+            const providerUrl = new URL('https://api.mymemory.translated.net/get');
+            providerUrl.searchParams.set('q', segment);
+            providerUrl.searchParams.set('langpair', 'en|ar');
+            const upstream = await fetch(providerUrl, { signal: AbortSignal.timeout(15000) });
+            if (!upstream.ok) throw new Error('Translation provider failed.');
+            const result = await upstream.json();
+            const translated = result.responseData?.translatedText;
+            if (Number(result.responseStatus) !== 200 || result.quotaFinished ||
+                typeof translated !== 'string' || !translated.trim()) {
+              throw new Error('Translation provider unavailable or daily limit reached.');
+            }
+            parts.push(translated);
+          }
+          const translated = parts.join(' ');
+          if (translationCache.size >= 2000) translationCache.delete(translationCache.keys().next().value);
+          translationCache.set(text, translated);
+          translations[index] = translated;
+        }
+      }));
+      sendJson(response, 200, { translations });
+    } catch {
+      sendJson(response, 502, { message: 'Task translation is unavailable or the free daily limit has been reached. Please try again later.' });
+    }
+    return;
+  }
 
   if (url.pathname === '/api/tasks' && request.method === 'GET') {
     const data = readJson(tasksPath);

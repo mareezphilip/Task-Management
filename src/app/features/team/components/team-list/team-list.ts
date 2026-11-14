@@ -1,3 +1,4 @@
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,6 +15,7 @@ import { TeamDataService } from '../../services/TeamDataService/team-data.servic
 @Component({
   selector: 'app-team-list',
   standalone: true,
+  imports: [TranslatePipe],
   templateUrl: './team-list.html',
   styleUrl: './team-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

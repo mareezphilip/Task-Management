@@ -2,12 +2,11 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, defer, EMPTY, finalize, throwError } from 'rxjs';
 import { GlobalErrorHandler } from '../../services/globalErrorHandler/global-error-handler';
-import { LoadingService } from '../../services/globalErrorHandler/loading-service/loading.service';
+import { LoadingService } from '../../services/loading-service/loading.service';
 
 export const globalHttpInterceptorInterceptor: HttpInterceptorFn = (req, next) => {
   const errorHandler = inject(GlobalErrorHandler);
   const loading = inject(LoadingService);
-
   return defer(() => {
     loading.start();
     return next(req);
@@ -21,7 +20,8 @@ export const globalHttpInterceptorInterceptor: HttpInterceptorFn = (req, next) =
 
       return throwError(() => error);
     }),
-    finalize(() => loading.stop()),
+    finalize(() => {
+      loading.stop();
+    }),
   );
 };
-

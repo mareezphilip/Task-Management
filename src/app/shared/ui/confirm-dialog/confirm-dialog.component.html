@@ -1,13 +1,15 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
 <mat-dialog-content>{{ data.message }}</mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button type="button" class="cancel-button" (click)="close(false)">No</button>
+  <button type="button" class="cancel-button" (click)="close(false)">
+    {{ 'confirm.no' | translate }}
+  </button>
   <button
     type="button"
     [class.danger-button]="data.danger"
     class="confirm-button"
     (click)="close(true)"
   >
-    Yes
+    {{ 'confirm.yes' | translate }}
   </button>
 </mat-dialog-actions>

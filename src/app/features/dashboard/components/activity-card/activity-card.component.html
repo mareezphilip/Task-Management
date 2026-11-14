@@ -12,7 +12,9 @@
   </span>
   <div class="activity-content">
     <p class="activity-action mb-1">
-      {{ activity().action }}
+      {{
+        (activity().action === 'Task created' ? 'activity.created' : 'activity.updated') | translate
+      }}
     </p>
     <p class="activity-title">
       {{ activity().title }}
@@ -20,13 +22,18 @@
 
     <div class="activity-meta">
       <span class="status-chip" [attr.data-status]="activity().status">{{
-        activity().status
+        (activity().status === 'To Do'
+          ? 'status.todo'
+          : activity().status === 'In Progress'
+            ? 'status.progress'
+            : 'status.completed'
+        ) | translate
       }}</span>
-      <span>Assigned to {{ activity().assignee }}</span>
+      <span>{{ 'activity.assigned' | translate }} {{ activity().assignee }}</span>
     </div>
 
     <time [attr.datetime]="activity().timestamp | date: 'yyyy-MM-ddTHH:mm:ss'">
-      {{ activity().timestamp | date: 'MMM d, h:mm a' }}
+      {{ activity().timestamp | date: 'MMM d, h:mm a' : undefined : i18n.language() }}
     </time>
   </div>
 </article>

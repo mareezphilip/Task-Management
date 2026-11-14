@@ -63,6 +63,8 @@ export interface Task {
   priority: TaskPriority;
   status: TaskStatus;
   dueLabel: string;
+  dueKey?: 'completed' | 'today' | 'inDays' | 'overdueDays';
+  dueDays?: number;
   category: string;
   assignee: { name: string; fullName?: string; initials: string };
   overdue?: boolean;

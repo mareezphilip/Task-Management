@@ -1,9 +1,11 @@
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { Task } from '../../models/task.model';
 
 @Component({
   selector: 'app-task-card',
   standalone: true,
+  imports: [TranslatePipe],
   templateUrl: './task-card.component.html',
   styleUrl: './task-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
