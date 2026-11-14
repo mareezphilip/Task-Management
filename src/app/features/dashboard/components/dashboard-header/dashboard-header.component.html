@@ -1,6 +1,6 @@
 <header class="topbar" [class.search-hidden]="!showSearch()">
   <a class="brand" href="/" [attr.aria-label]="'brand.home' | translate">
-    <img src="/assets/header/icon.svg" alt="{{ 'brand.name' | translate }}" />
+    <img src="/assets/header/icon.svg" alt="" aria-hidden="true" />
     <span>{{ 'brand.name' | translate }}</span></a
   >
   @if (showSearch()) {

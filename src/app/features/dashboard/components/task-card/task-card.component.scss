@@ -1,173 +1,178 @@
 :host {
-    display: block;
+  display: block;
 }
 
 .task-card {
-    padding: 12px 13px 10px;
-    background: #fff;
-    border: 1px solid #e5e8ec;
-    border-radius: 6px;
-    transition: border-color .15s ease, box-shadow .15s ease, transform .15s ease;
+  padding: 12px 13px 10px;
+  background: #fff;
+  border: 1px solid #e5e8ec;
+  border-radius: 6px;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
 }
 
 :host(:hover) .task-card,
 :host(:focus-within) .task-card {
-    transform: translateY(-2px);
-    border-color: #c8d9ec;
-    box-shadow: 0.5px 1px 1px #1976D2;
+  transform: translateY(-2px);
+  border-color: #c8d9ec;
+  box-shadow: 0.5px 1px 1px #1976d2;
 }
 
 .task-card.overdue {
-    border-left: 3px solid #ef4545;
-    background: #fff5f5;
+  border-left: 3px solid #ef4545;
+  background: #fff5f5;
 }
 
 .card-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
 }
 
 .priority {
-    padding: 3px 5px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-size: 9px;
-    font-weight: 700;
+  padding: 3px 5px;
+  border-radius: 3px;
+  text-transform: uppercase;
+  font-size: 9px;
+  font-weight: 700;
 }
 
 .priority.high {
-    color: #e24444;
-    background: #ffeded;
+  color: #a61b1b;
+  background: #ffeded;
 }
 
 .priority.medium {
-    color: #e5851c;
-    background: #fff2df;
+  color: #854a0e;
+  background: #fff2df;
 }
 
 .priority.low {
-    color: #64a73c;
-    background: #eff9e8;
+  color: #3d6b23;
+  background: #eff9e8;
 }
 
 .more {
-    display: grid;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    padding: 0 2px;
-    color: #8a9098;
-    border: 0;
-    background: transparent;
-    border-radius: 4px;
-    font-size: 16px;
-    line-height: 1;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  padding: 0 2px;
+  color: #5c636b;
+  border: 0;
+  background: transparent;
+  border-radius: 4px;
+  font-size: 16px;
+  line-height: 1;
 }
 
 .task-menu-wrap {
-    position: relative;
+  position: relative;
 }
 
 .task-menu {
-    position: absolute;
-    z-index: 2;
-    top: 26px;
-    right: 0;
-    min-width: 112px;
-    padding: 4px;
-    background: #fff;
-    border: 1px solid #e5e8ec;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px #1f29331f;
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  right: 0;
+  min-width: 112px;
+  padding: 4px;
+  background: #fff;
+  border: 1px solid #e5e8ec;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px #1f29331f;
 }
 
 .task-menu button {
-    display: block;
-    width: 100%;
-    padding: 7px 9px;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-    color: #303640;
-    text-align: left;
-    font-size: 12px;
-    cursor: pointer;
+  display: block;
+  width: 100%;
+  padding: 7px 9px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #303640;
+  text-align: left;
+  font-size: 12px;
+  cursor: pointer;
 }
 
 .task-menu button:hover,
 .task-menu button:focus-visible {
-    background: #f1f4f7;
-    outline: none;
+  background: #f1f4f7;
+  outline: none;
 }
 
 .task-menu .delete-action {
-    color: #c62828;
+  color: #c62828;
 }
 
 .more:hover,
 .more:focus-visible {
-    color: #303640;
-    background: #eef0f2;
-    outline: none;
+  color: #303640;
+  background: #eef0f2;
+  outline: none;
 }
 
 h3 {
-    margin: 0 0 5px;
-    font-size: 11px;
-    font-weight: 700;
+  margin: 0 0 5px;
+  font-size: 11px;
+  font-weight: 700;
 }
 
 .description {
-    min-height: 26px;
-    margin: 0 0 9px;
-    color: #858b93;
-    font-size: 10px;
-    line-height: 1.45;
+  min-height: 26px;
+  margin: 0 0 9px;
+  color: #5e6670;
+  font-size: 10px;
+  line-height: 1.45;
 }
 
 .due {
-    img{
-        width: 25px;
-        height: 25px;
-        align-items: center;
-    }
+  display: flex;
+  align-items: center;
+
+  img {
+    width: 25px;
+    height: 25px;
+  }
 }
 .category {
-    margin: 0 0 5px;
-    color: #7c838c;
-    font-size: 9px;
+  margin: 0 0 5px;
+  color: #59616b;
+  font-size: 9px;
 }
 
 .due span {
-    margin-right: 5px;
-    color: #b55d5d;
+  margin-right: 5px;
+  color: #934b4b;
 }
 
 .due.late {
-    color: #8a7474;
+  color: #614444;
 }
 
 .card-footer {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid #eceef1;
-    color: #3b4148;
-    font-size: 9px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px solid #eceef1;
+  color: #3b4148;
+  font-size: 9px;
 }
 
 .avatar {
-    display: grid;
-    place-items: center;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    color: white;
-    background: #1976d2;
-    font-size: 7px;
-    font-weight: 700;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  color: white;
+  background: #1976d2;
+  font-size: 7px;
+  font-weight: 700;
 }

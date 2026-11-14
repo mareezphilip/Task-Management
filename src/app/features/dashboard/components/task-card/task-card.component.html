@@ -26,13 +26,13 @@
   </div>
   <h3>{{ task().title }}</h3>
   <p class="description">{{ task().description }}</p>
-  <div class="due d-flex" [class.late]="task().overdue">
+  <div class="due" [class.late]="task().overdue">
     @if (task().overdue) {
-      <img src="/assets/dashboard/overdue.svg" alt="" />
+      <img src="/assets/dashboard/overdue.svg" alt="" aria-hidden="true" />
     } @else if (task().status === 'done') {
-      <img src="/assets/dashboard/completed.svg" alt="" />
+      <img src="/assets/dashboard/completed.svg" alt="" aria-hidden="true" />
     } @else if (task().status === 'in-progress' || task().status === 'todo') {
-      <img src="/assets/sidebar/calendar.svg" alt="" />
+      <img src="/assets/sidebar/calendar.svg" alt="" aria-hidden="true" />
     }
     <p>
       {{

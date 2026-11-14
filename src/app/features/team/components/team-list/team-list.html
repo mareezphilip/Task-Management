@@ -31,7 +31,7 @@
         @for (member of members(); track member.id) {
           <li class="member-row">
             @if (member.avatar) {
-              <img class="avatar" [src]="member.avatar" [alt]="member.name" />
+              <img class="avatar" [src]="member.avatar" alt="" aria-hidden="true" />
             } @else {
               <span class="avatar avatar-fallback" aria-hidden="true">{{
                 nameFormat(member.name)
