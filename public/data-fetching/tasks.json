@@ -96,25 +96,6 @@
       "updatedAt": "2026-11-12T16:06:07.302Z"
     },
     {
-      "id": "task-6",
-      "title": "Fix mobile login issue",
-      "description": "Resolve the issue preventing users from logging in on mobile devices.",
-      "status": "done",
-      "priority": "medium",
-      "dueDate": "2026-11-10T00:00:00.000Z",
-      "isOverdue": false,
-      "completedAt": "2026-11-14T18:05:53.498Z",
-      "assignee": {
-        "id": "user-3",
-        "name": "Olivia Rhye",
-        "avatar": "",
-        "email": "olivia.rhye@example.com"
-      },
-      "tags": ["Bug Fix", "Mobile"],
-      "createdAt": "2026-11-06T14:04:18.662Z",
-      "updatedAt": "2026-11-14T19:45:06.697Z"
-    },
-    {
       "id": "task-4",
       "title": "Update payment gateway integration",
       "description": "Migrate to the new payment provider API and update billing logic.",
@@ -122,7 +103,7 @@
       "priority": "high",
       "dueDate": "2026-11-10T14:04:18.662Z",
       "isOverdue": false,
-      "completedAt": "2026-11-14T09:22:13.369Z",
+      "completedAt": "2026-11-14T21:31:13.913Z",
       "assignee": {
         "id": "user-2",
         "name": "John Davis",
@@ -131,7 +112,26 @@
       },
       "tags": ["Backend", "Payments"],
       "createdAt": "2026-11-01T14:04:18.662Z",
-      "updatedAt": "2026-11-14T09:22:13.369Z"
+      "updatedAt": "2026-11-14T21:31:13.913Z"
+    },
+    {
+      "id": "task-1",
+      "title": "Prepare Q4 budget report",
+      "description": "Compile and analyze financial data for the quarterly budget presentation.",
+      "status": "done",
+      "priority": "high",
+      "dueDate": "2026-11-09T14:04:18.662Z",
+      "isOverdue": false,
+      "completedAt": "2026-11-14T21:31:08.607Z",
+      "assignee": {
+        "id": "user-1",
+        "name": "Sarah Smith",
+        "avatar": "",
+        "email": "sarah@example.com"
+      },
+      "tags": ["Finance", "Planning"],
+      "createdAt": "2026-10-30T14:04:18.662Z",
+      "updatedAt": "2026-11-14T21:31:08.607Z"
     },
     {
       "id": "task-1794431853387",
@@ -191,33 +191,14 @@
       "updatedAt": "2026-11-13T14:13:07.947Z"
     },
     {
-      "id": "task-1",
-      "title": "Prepare Q4 budget report",
-      "description": "Compile and analyze financial data for the quarterly budget presentation.",
-      "status": "in_progress",
-      "priority": "high",
-      "dueDate": "2026-11-09T14:04:18.662Z",
-      "isOverdue": true,
-      "completedAt": null,
-      "assignee": {
-        "id": "user-1",
-        "name": "Sarah Smith",
-        "avatar": "",
-        "email": "sarah@example.com"
-      },
-      "tags": ["Finance", "Planning"],
-      "createdAt": "2026-10-30T14:04:18.662Z",
-      "updatedAt": "2026-11-14T19:49:20.326Z"
-    },
-    {
       "id": "task-1794413191260",
       "title": "test task",
       "description": "Description",
-      "status": "in_progress",
+      "status": "done",
       "priority": "medium",
       "dueDate": "2026-11-21T00:00:00.000Z",
       "isOverdue": false,
-      "completedAt": null,
+      "completedAt": "2026-11-14T21:30:49.060Z",
       "assignee": {
         "id": "user-1794413191260",
         "name": "mareez philip",
@@ -226,17 +207,17 @@
       },
       "tags": ["Development"],
       "createdAt": "2026-11-11T16:06:31.260Z",
-      "updatedAt": "2026-11-14T16:42:03.426Z"
+      "updatedAt": "2026-11-14T21:30:49.060Z"
     },
     {
       "id": "task-2",
       "title": "Design new homepage layout",
       "description": "Create wireframes and mockups for the homepage redesign.",
-      "status": "in_progress",
+      "status": "done",
       "priority": "high",
       "dueDate": "2026-11-13T14:04:18.662Z",
-      "isOverdue": true,
-      "completedAt": null,
+      "isOverdue": false,
+      "completedAt": "2026-11-14T21:30:51.942Z",
       "assignee": {
         "id": "user-2",
         "name": "John Davis",
@@ -245,11 +226,30 @@
       },
       "tags": ["Design", "Website"],
       "createdAt": "2026-11-03T14:04:18.662Z",
-      "updatedAt": "2026-11-14T09:22:23.471Z"
+      "updatedAt": "2026-11-14T21:30:51.942Z"
+    },
+    {
+      "id": "task-6",
+      "title": "Fix mobile login issue",
+      "description": "Resolve the issue preventing users from logging in on mobile devices.",
+      "status": "in_progress",
+      "priority": "medium",
+      "dueDate": "2026-11-10T00:00:00.000Z",
+      "isOverdue": true,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-3",
+        "name": "Olivia Rhye",
+        "avatar": "",
+        "email": "olivia.rhye@example.com"
+      },
+      "tags": ["Bug Fix", "Mobile"],
+      "createdAt": "2026-11-06T14:04:18.662Z",
+      "updatedAt": "2026-11-14T21:31:06.952Z"
     }
   ],
   "meta": {
     "totalCount": 13,
-    "lastUpdated": "2026-11-14T19:49:20.326Z"
+    "lastUpdated": "2026-11-14T21:31:58.218Z"
   }
 }

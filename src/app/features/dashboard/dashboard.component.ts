@@ -4,7 +4,7 @@ import {
   ChangeDetectorRef,
   Component,
   DestroyRef,
-  OnInit,
+  effect,
   computed,
   inject,
   signal,
@@ -52,7 +52,7 @@ import { I18nService } from '../../core/services/i18n/i18n.service';
   styleUrl: './dashboard.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   private readonly dashboardData = inject(DashboardDataService);
   private readonly dashboardSearch = inject(DashboardSearchService);
   private readonly dialog = inject(MatDialog);
@@ -140,9 +140,24 @@ export class DashboardComponent implements OnInit {
     { label: 'filter.completed', status: 'done' },
   ];
 
-  ngOnInit(): void {
-    this.loadStatistics();
-    this.loadTasks();
+  constructor() {
+    effect(() => {
+      const tasks = this.dashboardData.tasksResource.value();
+      if (tasks) this.dashboardData.setTasks(tasks.tasks);
+    });
+    effect(() => {
+      const response = this.dashboardData.statisticsResource.value();
+      if (!response) return;
+      this.statistics.set(
+        response.statistics.map((statistic) => ({
+          label: statistic.title,
+          value: statistic.value,
+          caption: `${statistic.change} ${statistic.changeLabel}`,
+          icon: statistic.icon,
+          tone: this.metricTone(statistic.color),
+        })),
+      );
+    });
   }
 
   protected selectFilter(status: ApiTaskStatus | 'all'): void {
@@ -208,27 +223,6 @@ export class DashboardComponent implements OnInit {
         }),
       )
       .subscribe();
-  }
-
-  private loadStatistics(): void {
-    this.dashboardData.getStatistics().subscribe({
-      next: (response) => {
-        this.statistics.set(
-          response.statistics.map((statistic) => ({
-            label: statistic.title,
-            value: statistic.value,
-            caption: `${statistic.change} ${statistic.changeLabel}`,
-            icon: statistic.icon,
-            tone: this.metricTone(statistic.color),
-          })),
-        );
-        this.changeDetector.markForCheck();
-      },
-    });
-  }
-
-  private loadTasks(): void {
-    this.dashboardData.getTasks().pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   private toDashboardTask(task: ApiTask): Task {

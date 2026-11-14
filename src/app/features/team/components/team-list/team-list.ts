@@ -1,15 +1,5 @@
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  OnInit,
-  signal,
-} from '@angular/core';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { type Assignee } from '../../models/assignee.model';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { TeamDataService } from '../../services/TeamDataService/team-data.service';
 
 @Component({
@@ -20,26 +10,18 @@ import { TeamDataService } from '../../services/TeamDataService/team-data.servic
   styleUrl: './team-list.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TeamList implements OnInit {
+export class TeamList {
   private readonly teamData = inject(TeamDataService);
-  private readonly destroyRef = inject(DestroyRef);
   protected readonly search = signal('');
-  private readonly allMembers = signal<Assignee[]>([]);
+  private readonly allMembers = computed(
+    () => this.teamData.membersResource.value()?.members ?? [],
+  );
   protected readonly members = computed(() => {
     const query = this.search().trim().toLowerCase();
     return this.allMembers().filter((member) =>
       `${member.name} ${member.email}`.toLowerCase().includes(query),
     );
   });
-
-  ngOnInit(): void {
-    this.teamData
-      .getMembers()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((response) => {
-        this.allMembers.set(response.members);
-      });
-  }
 
   nameFormat(name: string): string {
     return name
