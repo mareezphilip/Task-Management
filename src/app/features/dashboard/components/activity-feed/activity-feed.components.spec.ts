@@ -2,6 +2,7 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivityFeedComponent } from './activity-feed.component';
 import type { ApiTask } from '../../models/task.model';
+import { TaskLocalizationService } from '../../services/task-localization.service';
 
 describe('ActivityFeedComponent', () => {
   let fixture: ComponentFixture<ActivityFeedComponent>;
@@ -30,7 +31,10 @@ describe('ActivityFeedComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ActivityFeedComponent],
-      providers: [provideZonelessChangeDetection()],
+      providers: [
+        provideZonelessChangeDetection(),
+        { provide: TaskLocalizationService, useValue: { translate: (text: string) => text } },
+      ],
     }).compileComponents();
     fixture = TestBed.createComponent(ActivityFeedComponent);
     setTasks([]);

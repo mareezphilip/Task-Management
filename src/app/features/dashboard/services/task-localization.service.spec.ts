@@ -45,10 +45,11 @@ describe('TaskLocalizationService', () => {
     language.set('ar');
     TestBed.tick();
     const request = http.expectOne('/api/translations');
-    expect(TestBed.inject(LoadingService).isLoading()).toBeFalse();
+    expect(TestBed.inject(LoadingService).isLoading()).toBeTrue();
     expect(request.request.body).toEqual({ texts: ['New task', 'Task description'], target: 'ar' });
     expect(service.translate('New task')).toBe('New task');
     request.flush({ translations: ['مهمة جديدة', 'وصف المهمة'] });
+    expect(TestBed.inject(LoadingService).isLoading()).toBeFalse();
     expect(service.translate('New task')).toBe('مهمة جديدة');
 
     tasks.update((current) => [
