@@ -29,10 +29,6 @@
   background: #1976d2;
 }
 
-.labeled-button.active .button-image {
-  filter: brightness(0) invert(1);
-}
-
 .labeled-button.active:hover {
   background: #eef0f2;
   color: #303640;

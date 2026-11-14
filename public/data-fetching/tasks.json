@@ -1,25 +1,6 @@
 {
   "tasks": [
     {
-      "id": "task-1",
-      "title": "Prepare Q4 budget report",
-      "description": "Compile and analyze financial data for the quarterly budget presentation.",
-      "status": "todo",
-      "priority": "high",
-      "dueDate": "2026-11-09T14:04:18.662Z",
-      "isOverdue": true,
-      "completedAt": null,
-      "assignee": {
-        "id": "user-1",
-        "name": "Sarah Smith",
-        "avatar": "",
-        "email": "sarah@example.com"
-      },
-      "tags": ["Finance", "Planning"],
-      "createdAt": "2026-10-30T14:04:18.662Z",
-      "updatedAt": "2026-11-12T15:40:24.603Z"
-    },
-    {
       "id": "task-3",
       "title": "Update API documentation",
       "description": "Review and update API documentation for the v2.0 release.",
@@ -120,18 +101,18 @@
       "description": "Resolve the issue preventing users from logging in on mobile devices.",
       "status": "done",
       "priority": "medium",
-      "dueDate": "2026-11-10T14:04:18.662Z",
+      "dueDate": "2026-11-10T00:00:00.000Z",
       "isOverdue": false,
       "completedAt": "2026-11-14T18:05:53.498Z",
       "assignee": {
         "id": "user-3",
-        "name": "Mike Taylor",
+        "name": "Olivia Rhye",
         "avatar": "",
-        "email": "mike@example.com"
+        "email": "olivia.rhye@example.com"
       },
       "tags": ["Bug Fix", "Mobile"],
       "createdAt": "2026-11-06T14:04:18.662Z",
-      "updatedAt": "2026-11-14T18:05:53.498Z"
+      "updatedAt": "2026-11-14T19:45:06.697Z"
     },
     {
       "id": "task-4",
@@ -210,6 +191,25 @@
       "updatedAt": "2026-11-13T14:13:07.947Z"
     },
     {
+      "id": "task-1",
+      "title": "Prepare Q4 budget report",
+      "description": "Compile and analyze financial data for the quarterly budget presentation.",
+      "status": "in_progress",
+      "priority": "high",
+      "dueDate": "2026-11-09T14:04:18.662Z",
+      "isOverdue": true,
+      "completedAt": null,
+      "assignee": {
+        "id": "user-1",
+        "name": "Sarah Smith",
+        "avatar": "",
+        "email": "sarah@example.com"
+      },
+      "tags": ["Finance", "Planning"],
+      "createdAt": "2026-10-30T14:04:18.662Z",
+      "updatedAt": "2026-11-14T19:49:20.326Z"
+    },
+    {
       "id": "task-1794413191260",
       "title": "test task",
       "description": "Description",
@@ -250,6 +250,6 @@
   ],
   "meta": {
     "totalCount": 13,
-    "lastUpdated": "2026-11-14T18:05:53.498Z"
+    "lastUpdated": "2026-11-14T19:49:20.326Z"
   }
 }

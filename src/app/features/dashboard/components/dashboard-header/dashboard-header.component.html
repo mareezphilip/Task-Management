@@ -1,15 +1,18 @@
-<header class="topbar">
-  <a class="brand" href="/" [attr.aria-label]="'brand.home' | translate"
-    ><span class="brand-mark">▦</span><span>{{ 'brand.name' | translate }}</span></a
+<header class="topbar" [class.search-hidden]="!showSearch()">
+  <a class="brand" href="/" [attr.aria-label]="'brand.home' | translate">
+    <img src="/assets/header/icon.svg" alt="{{ 'brand.name' | translate }}" />
+    <span>{{ 'brand.name' | translate }}</span></a
   >
-  <label class="search"
-    ><span aria-hidden="true">⌕</span
-    ><input
-      type="search"
-      [placeholder]="'search.tasks' | translate"
-      [attr.aria-label]="'search.tasks.label' | translate"
-      (input)="onSearchInput($event)"
-  /></label>
+  @if (showSearch()) {
+    <label class="search"
+      ><span aria-hidden="true">⌕</span
+      ><input
+        type="search"
+        [placeholder]="'search.tasks' | translate"
+        [attr.aria-label]="'search.tasks.label' | translate"
+        (input)="onSearchInput($event)"
+    /></label>
+  }
   <div class="header-actions">
     <button
       class="language-button"

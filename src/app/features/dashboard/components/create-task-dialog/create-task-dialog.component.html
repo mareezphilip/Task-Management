@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{ (taskToEdit ? 'task.edit' : 'task.create') | translate }}</h2>
 <mat-dialog-content>
-  <form [formGroup]="taskForm" class="create-form" (ngSubmit)="submitTask()">
+  <form id="create-task-form" [formGroup]="taskForm" class="create-form" (ngSubmit)="submitTask()">
     <label for="task-title">{{ 'task.title' | translate }}</label>
     <input
       pInputText
@@ -141,14 +141,13 @@
         }
       </div>
     </fieldset>
-
-    <div class="form-actions">
-      <button type="button" class="cancel-button" [disabled]="loading" (click)="close()">
-        {{ 'task.cancel' | translate }}
-      </button>
-      <button type="submit" class="save-button" [disabled]="loading">
-        {{ (loading ? 'task.saving' : taskToEdit ? 'task.saveChanges' : 'task.save') | translate }}
-      </button>
-    </div>
   </form>
 </mat-dialog-content>
+<mat-dialog-actions align="end" class="form-actions">
+  <button type="button" class="cancel-button" [disabled]="loading" (click)="close()">
+    {{ 'task.cancel' | translate }}
+  </button>
+  <button type="submit" form="create-task-form" class="save-button" [disabled]="loading">
+    {{ (loading ? 'task.saving' : taskToEdit ? 'task.saveChanges' : 'task.save') | translate }}
+  </button>
+</mat-dialog-actions>

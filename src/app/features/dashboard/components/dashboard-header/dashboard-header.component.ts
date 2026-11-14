@@ -1,5 +1,5 @@
 import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
-import { ChangeDetectionStrategy, Component, inject, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, output } from '@angular/core';
 
 import { I18nService } from '../../../../core/services/i18n/i18n.service';
 
@@ -13,6 +13,7 @@ import { I18nService } from '../../../../core/services/i18n/i18n.service';
 })
 export class DashboardHeaderComponent {
   protected readonly i18n = inject(I18nService);
+  readonly showSearch = input(true);
   readonly searchChanged = output<string>();
 
   protected onSearchInput(event: Event): void {
