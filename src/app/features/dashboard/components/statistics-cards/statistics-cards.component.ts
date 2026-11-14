@@ -1,5 +1,5 @@
-import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { TranslatePipe } from '../../../../core/pipes/translate.pipe';
 import { DashboardMetric } from '../../models/task.model';
 
 @Component({

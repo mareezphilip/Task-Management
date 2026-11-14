@@ -3,6 +3,7 @@
     <p class="data-message" role="status">{{ 'dashboard.loading' | translate }}</p>
   }
   <app-statistics-cards [metrics]="metrics()" />
+  <app-statistics-charts [tasks]="dashboardData.tasks()" />
   <section class="board-toolbar" [attr.aria-label]="'board.controls' | translate">
     <div class="filters" [attr.aria-label]="'board.filters' | translate">
       @for (filter of filters; track filter.status) {

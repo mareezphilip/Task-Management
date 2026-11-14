@@ -9,7 +9,7 @@ A responsive **Angular 20** dashboard with task management, a Kanban board, Engl
 **Create, edit, and delete tasks** with validation and confirmation dialogs.
 **Search** titles and descriptions, and filter by status, priority, or assignee.
 **Drag and drop** tasks to change status or reorder them.
-View task statistics and **recent activity**.
+View task statistics and **Chart.js analytics** for task distribution by status and priority, alongside **recent activity**.
 **Team Directory / User Management:** Browse and search team members, and assign them to tasks. The member list can use mocked data.
 Switch between **English and Arabic**, with RTL support and a saved language preference.
 **Responsive layouts**, loading indicators, and error notifications.
@@ -23,6 +23,7 @@ Switch between **English and Arabic**, with RTL support and a saved language pre
 | Angular Material 20                          | Task/confirmation dialogs and snackbar notifications with focus management.                                            |
 | PrimeNG 20 and Aura                          | Selects, checkboxes, and text inputs for task forms.                                                                   |
 | Angular CDK                                  | Drag-and-drop task movement and ordering.                                                                              |
+| Chart.js                                     | Responsive doughnut and bar charts for task status and priority analytics.                                             |
 | Reactive Forms                               | Validation, dirty/touched state, and shared create/edit behavior.                                                      |
 | Angular `httpResource`, HttpClient, and RxJS | Signal-based HTTP reads with `httpResource`, plus mutation requests, loading/error handling, and subscription cleanup. |
 | Custom localization and SCSS                 | English/Arabic dictionaries, RTL/LTR layouts, and responsive styling.                                                  |
@@ -119,7 +120,6 @@ Open **http://localhost:8080**. Set `WEB_PORT` to use another port, for example 
 
 ## Limitations and next steps
 
-- Add task-distribution charts,
 - Replace demo JSON storage with a database and authentication; add durable activity history.
 - Improve branch/function coverage, add end-to-end tests, and reduce the initial bundle (692.43 kB, above the 500 kB warning budget).
 - Task translation depends on provider availability; live-server rollout remains to be configured after image publishing.

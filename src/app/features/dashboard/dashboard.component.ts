@@ -29,6 +29,7 @@ import { DashboardSearchService } from './services/dashboard-search.service';
 import { TaskLocalizationService } from './services/task-localization.service';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { StatisticsCardsComponent } from './components/statistics-cards/statistics-cards.component';
+import { StatisticsChartsComponent } from './components/statistics-charts/statistics-charts.component';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
 import { ActivityFeedComponent } from './components/activity-feed/activity-feed.component';
 import { ConfirmDialogComponent } from '../../shared/ui/confirm-dialog/confirm-dialog.component';
@@ -45,6 +46,7 @@ import { I18nService } from '../../core/services/i18n/i18n.service';
     SelectModule,
     TranslatePipe,
     StatisticsCardsComponent,
+    StatisticsChartsComponent,
     TaskBoardComponent,
     ActivityFeedComponent,
   ],
@@ -53,7 +55,7 @@ import { I18nService } from '../../core/services/i18n/i18n.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent {
-  private readonly dashboardData = inject(DashboardDataService);
+  protected readonly dashboardData = inject(DashboardDataService);
   private readonly dashboardSearch = inject(DashboardSearchService);
   private readonly dialog = inject(MatDialog);
   private readonly i18n = inject(I18nService);

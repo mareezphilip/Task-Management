@@ -1,0 +1,53 @@
+<section class="analytics" [attr.aria-label]="'stats.analytics' | translate">
+  <article class="chart-card">
+    <h2>{{ 'stats.distribution' | translate }}</h2>
+    <div class="chart-content">
+      <div class="chart-wrap doughnut-wrap">
+        <canvas
+          #statusCanvas
+          role="img"
+          [attr.aria-label]="'stats.statusChartSummary' | translate: { total: tasks().length }"
+        ></canvas>
+        <div class="chart-center" aria-hidden="true">
+          <strong>{{ tasks().length }}</strong>
+          <span>{{ 'metric.Total Tasks' | translate }}</span>
+        </div>
+      </div>
+      <ul class="chart-legend">
+        @for (item of distribution(); track item.status) {
+          <li class="legend-row">
+            <span class="legend-label">
+              <span [class]="'legend-swatch ' + item.status" aria-hidden="true"></span>
+              {{ item.labelKey | translate }}
+            </span>
+            <strong>{{ item.count }}</strong>
+          </li>
+        }
+      </ul>
+    </div>
+  </article>
+
+  <article class="chart-card">
+    <h2>{{ 'stats.priorityDistribution' | translate }}</h2>
+    <div class="chart-content priority-content">
+      <div class="chart-wrap priority-wrap">
+        <canvas
+          #priorityCanvas
+          role="img"
+          [attr.aria-label]="'stats.priorityChartSummary' | translate"
+        ></canvas>
+      </div>
+      <ul class="chart-legend priority-legend">
+        @for (item of priorities(); track item.priority) {
+          <li class="legend-row">
+            <span class="legend-label">
+              <span [class]="'legend-swatch ' + item.priority" aria-hidden="true"></span>
+              {{ 'priority.' + item.priority | translate }}
+            </span>
+            <strong>{{ item.count }}</strong>
+          </li>
+        }
+      </ul>
+    </div>
+  </article>
+</section>
