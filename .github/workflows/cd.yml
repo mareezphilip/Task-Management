@@ -1,0 +1,84 @@
+name: CD - Publish Docker images
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    name: Build and push images to GHCR
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      (github.event.workflow_run.head_branch == 'master' || startsWith(github.event.workflow_run.head_branch, 'v'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Check out the commit tested by CI
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Prepare web image metadata
+        id: web-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}-web
+          tags: |
+            type=raw,value=master,enable=${{ github.event.workflow_run.head_branch == 'master' }}
+            type=raw,value=${{ github.event.workflow_run.head_branch }},enable=${{ startsWith(github.event.workflow_run.head_branch, 'v') }}
+            type=raw,value=sha-${{ github.event.workflow_run.head_sha }}
+            type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'master' }}
+
+      - name: Build and push web image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: .Dockerfile
+          target: web
+          push: true
+          tags: ${{ steps.web-meta.outputs.tags }}
+          labels: ${{ steps.web-meta.outputs.labels }}
+          cache-from: type=gha,scope=web
+          cache-to: type=gha,mode=max,scope=web
+
+      - name: Prepare API image metadata
+        id: api-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ghcr.io/${{ github.repository }}-api
+          tags: |
+            type=raw,value=master,enable=${{ github.event.workflow_run.head_branch == 'master' }}
+            type=raw,value=${{ github.event.workflow_run.head_branch }},enable=${{ startsWith(github.event.workflow_run.head_branch, 'v') }}
+            type=raw,value=sha-${{ github.event.workflow_run.head_sha }}
+            type=raw,value=latest,enable=${{ github.event.workflow_run.head_branch == 'master' }}
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: .Dockerfile
+          target: api
+          push: true
+          tags: ${{ steps.api-meta.outputs.tags }}
+          labels: ${{ steps.api-meta.outputs.labels }}
+          cache-from: type=gha,scope=api
+          cache-to: type=gha,mode=max,scope=api
