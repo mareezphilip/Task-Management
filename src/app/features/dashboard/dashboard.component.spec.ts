@@ -10,14 +10,23 @@ import { TaskDto } from "./DTO'S/task.dto";
 import { globalHttpInterceptorInterceptor } from '../../core/interceptors/GlobalHttpInterceptor/global-http-interceptor-interceptor';
 import { GlobalErrorHandler } from '../../core/services/globalErrorHandler/global-error-handler';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
+import { ActivityFeedComponent } from './components/activity-feed/activity-feed.component';
 
 describe('DashboardComponent', () => {
   let fixture: ComponentFixture<DashboardComponent>;
   let http: HttpTestingController;
   const task: ApiTask = {
-    id: 'task-1', title: 'Example task', description: 'Description', status: 'todo',
-    priority: 'medium', dueDate: '2026-11-20T00:00:00.000Z', isOverdue: false,
-    completedAt: null, tags: [], createdAt: '', updatedAt: '',
+    id: 'task-1',
+    title: 'Example task',
+    description: 'Description',
+    status: 'todo',
+    priority: 'medium',
+    dueDate: '2026-11-20T00:00:00.000Z',
+    isOverdue: false,
+    completedAt: null,
+    tags: [],
+    createdAt: '',
+    updatedAt: '',
     assignee: { id: 'user-1', name: 'Alex', email: 'alex@example.com', avatar: '' },
   };
 
@@ -28,7 +37,10 @@ describe('DashboardComponent', () => {
         provideZonelessChangeDetection(),
         provideHttpClient(withInterceptors([globalHttpInterceptorInterceptor])),
         provideHttpClientTesting(),
-        { provide: GlobalErrorHandler, useValue: { handleError: jasmine.createSpy('handleError') } },
+        {
+          provide: GlobalErrorHandler,
+          useValue: { handleError: jasmine.createSpy('handleError') },
+        },
       ],
     }).compileComponents();
     http = TestBed.inject(HttpTestingController);
@@ -49,7 +61,9 @@ describe('DashboardComponent', () => {
     http.expectOne('/api/statistics').flush(null, { status: 500, statusText: 'Server Error' });
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('[role="status"]')).toBeNull();
-    expect(fixture.debugElement.query(By.directive(TaskBoardComponent)).componentInstance.saving()).toBeFalse();
+    expect(
+      fixture.debugElement.query(By.directive(TaskBoardComponent)).componentInstance.saving(),
+    ).toBeFalse();
     expect(TestBed.inject(GlobalErrorHandler).handleError).toHaveBeenCalledTimes(2);
   });
 
@@ -58,28 +72,43 @@ describe('DashboardComponent', () => {
     http.expectOne('/api/tasks').flush({ tasks: [task], meta: { totalCount: 1, lastUpdated: '' } });
     fixture.detectChanges();
     const board = fixture.debugElement.query(By.directive(TaskBoardComponent));
-    const move = { task: board.componentInstance.tasks()[0], status: 'in-progress', beforeTaskId: null };
+    const move = {
+      task: board.componentInstance.tasks()[0],
+      status: 'in-progress',
+      beforeTaskId: null,
+    };
     board.triggerEventHandler('taskMoved', move);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).toContain(task.title);
-    http.expectOne('/api/tasks/task-1/move').flush(null, { status: 500, statusText: 'Server Error' });
+    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).toContain(
+      task.title,
+    );
+    http
+      .expectOne('/api/tasks/task-1/move')
+      .flush(null, { status: 500, statusText: 'Server Error' });
     fixture.detectChanges();
     expect(board.componentInstance.saving()).toBeFalse();
-    expect(fixture.nativeElement.querySelectorAll('.board-column')[0].textContent).toContain(task.title);
-    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).not.toContain(task.title);
+    expect(fixture.nativeElement.querySelectorAll('.board-column')[0].textContent).toContain(
+      task.title,
+    );
+    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).not.toContain(
+      task.title,
+    );
     expect(TestBed.inject(GlobalErrorHandler).handleError).toHaveBeenCalledTimes(1);
 
     board.triggerEventHandler('taskMoved', move);
     http.expectOne('/api/tasks/task-1/move').flush({
-      tasks: [{ ...task, status: 'in_progress' }], meta: { totalCount: 1, lastUpdated: '' },
+      tasks: [{ ...task, status: 'in_progress' }],
+      meta: { totalCount: 1, lastUpdated: '' },
     });
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).toContain(task.title);
+    expect(fixture.nativeElement.querySelectorAll('.board-column')[1].textContent).toContain(
+      task.title,
+    );
     expect(board.componentInstance.saving()).toBeFalse();
   });
 
   it('renders the dashboard sections', () => {
-    expect(fixture.nativeElement.querySelector('app-dashboard-header')).toBeTruthy();
+    expect(fixture.debugElement.query(By.directive(ActivityFeedComponent))).toBeTruthy();
     expect(fixture.nativeElement.querySelector('app-task-board')).toBeTruthy();
   });
 
@@ -88,13 +117,21 @@ describe('DashboardComponent', () => {
     data.createTask(new TaskDto(task)).subscribe();
     http.expectOne('/api/tasks').flush({ task });
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('app-task-card h3').textContent).toContain('Example task');
+    expect(fixture.nativeElement.querySelector('app-task-card h3').textContent).toContain(
+      'Example task',
+    );
 
-    data.updateTask(task.id, new TaskDto({ ...task, title: 'Updated task', status: 'done' })).subscribe();
-    http.expectOne('/api/tasks/task-1').flush({ task: { ...task, title: 'Updated task', status: 'done' } });
+    data
+      .updateTask(task.id, new TaskDto({ ...task, title: 'Updated task', status: 'done' }))
+      .subscribe();
+    http
+      .expectOne('/api/tasks/task-1')
+      .flush({ task: { ...task, title: 'Updated task', status: 'done' } });
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('app-task-card').length).toBe(1);
-    expect(fixture.nativeElement.querySelectorAll('.board-column')[2].textContent).toContain('Updated task');
+    expect(fixture.nativeElement.querySelectorAll('.board-column')[2].textContent).toContain(
+      'Updated task',
+    );
     http.expectNone('/api/tasks');
     http.expectNone('/api/statistics');
   });

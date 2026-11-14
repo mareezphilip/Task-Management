@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { GlobalErrorHandler } from './global-error-handler';
@@ -6,7 +7,7 @@ describe('GlobalErrorHandler', () => {
   let service: GlobalErrorHandler;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
     service = TestBed.inject(GlobalErrorHandler);
   });
 

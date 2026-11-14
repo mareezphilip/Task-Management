@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivityFeedComponent } from './activity-feed.component';
 import type { ApiTask } from '../../models/task.model';
@@ -27,7 +28,10 @@ describe('ActivityFeedComponent', () => {
   }
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [ActivityFeedComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [ActivityFeedComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
     fixture = TestBed.createComponent(ActivityFeedComponent);
     setTasks([]);
   });

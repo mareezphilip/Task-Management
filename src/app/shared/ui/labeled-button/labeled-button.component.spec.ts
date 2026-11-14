@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { LabeledButtonComponent } from './labeled-button.component';
 
@@ -5,7 +6,10 @@ describe('LabeledButtonComponent', () => {
   let fixture: ComponentFixture<LabeledButtonComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [LabeledButtonComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [LabeledButtonComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
     fixture = TestBed.createComponent(LabeledButtonComponent);
     fixture.componentRef.setInput('image', '/assets/icon.svg');
     fixture.componentRef.setInput('label', 'Dashboard');

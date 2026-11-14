@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatisticsCardsComponent } from './statistics-cards.component';
 import { DashboardMetric } from '../../models/task.model';
@@ -9,7 +10,10 @@ describe('StatisticsCardsComponent', () => {
   ];
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [StatisticsCardsComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [StatisticsCardsComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
     fixture = TestBed.createComponent(StatisticsCardsComponent);
     fixture.componentRef.setInput('metrics', metrics);
     fixture.detectChanges();
