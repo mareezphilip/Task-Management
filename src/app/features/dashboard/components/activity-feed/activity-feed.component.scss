@@ -1,0 +1,49 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.activity-feed {
+  min-width: 0;
+  padding: 18px 20px;
+  border: 1px solid #e9edf1;
+  border-radius: 7px;
+  background: #fff;
+
+  .activity-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #edf0f2;
+
+    h2 {
+      margin: 0;
+      color: #252b32;
+      font-size: 15px;
+      font-weight: 650;
+    }
+
+    p {
+      margin: 4px 0 0;
+      color: #87909a;
+      font-size: 11px;
+    }
+  }
+
+  .activity-list {
+    display: grid;
+    gap: 0;
+  }
+
+  .activity-empty {
+    margin: 0;
+    padding-top: 16px;
+    color: #87909a;
+    font-size: 12px;
+  }
+
+  @media (max-width: 520px) {
+    padding: 15px;
+  }
+}

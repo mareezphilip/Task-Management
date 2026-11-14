@@ -28,6 +28,7 @@ import { DashboardSearchService } from './services/dashboard-search.service';
 import { CreateTaskDialogComponent } from './components/create-task-dialog/create-task-dialog.component';
 import { StatisticsCardsComponent } from './components/statistics-cards/statistics-cards.component';
 import { TaskBoardComponent } from './components/task-board/task-board.component';
+import { ActivityFeedComponent } from './components/activity-feed/activity-feed.component';
 import { ConfirmDialogComponent } from '../../shared/ui/confirm-dialog/confirm-dialog.component';
 import { LoadingService } from '../../core/services/globalErrorHandler/loading-service/loading.service';
 
@@ -40,6 +41,7 @@ import { LoadingService } from '../../core/services/globalErrorHandler/loading-s
     SelectModule,
     StatisticsCardsComponent,
     TaskBoardComponent,
+    ActivityFeedComponent,
   ],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
@@ -53,6 +55,7 @@ export class DashboardComponent implements OnInit {
   private readonly changeDetector = inject(ChangeDetectorRef);
   protected readonly loading = inject(LoadingService);
   private readonly statistics = signal<DashboardMetric[]>([]);
+  protected readonly activityTasks = this.dashboardData.tasks;
   private readonly optimisticTasks = signal<Task[] | null>(null);
   protected readonly tasks = computed(() => {
     const search = this.dashboardSearch.searchTerm().toLowerCase();

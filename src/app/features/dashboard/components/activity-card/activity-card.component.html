@@ -1,0 +1,32 @@
+<article class="activity-card">
+  <span
+    class="activity-icon"
+    [class.created]="activity().action === 'Task created'"
+    aria-hidden="true"
+  >
+    @if (activity().action === 'Task created') {
+      +
+    } @else {
+      ↻
+    }
+  </span>
+  <div class="activity-content">
+    <p class="activity-action mb-1">
+      {{ activity().action }}
+    </p>
+    <p class="activity-title">
+      {{ activity().title }}
+    </p>
+
+    <div class="activity-meta">
+      <span class="status-chip" [attr.data-status]="activity().status">{{
+        activity().status
+      }}</span>
+      <span>Assigned to {{ activity().assignee }}</span>
+    </div>
+
+    <time [attr.datetime]="activity().timestamp | date: 'yyyy-MM-ddTHH:mm:ss'">
+      {{ activity().timestamp | date: 'MMM d, h:mm a' }}
+    </time>
+  </div>
+</article>

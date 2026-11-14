@@ -42,11 +42,14 @@
       <button class="create-button" type="button" (click)="openCreateForm()">＋ New Task</button>
     </div>
   </section>
-  <app-task-board
-    [tasks]="tasks()"
-    [saving]="isSavingMove || loading.isLoading()"
-    (editRequested)="editTask($event)"
-    (deleteRequested)="deleteTask($event)"
-    (taskMoved)="moveTask($event)"
-  />
+  <div class="board-workspace">
+    <app-task-board
+      [tasks]="tasks()"
+      [saving]="isSavingMove || loading.isLoading()"
+      (editRequested)="editTask($event)"
+      (deleteRequested)="deleteTask($event)"
+      (taskMoved)="moveTask($event)"
+    />
+    <app-activity-feed [tasks]="activityTasks()" />
+  </div>
 </main>
