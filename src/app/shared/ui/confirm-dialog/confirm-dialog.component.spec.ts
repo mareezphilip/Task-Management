@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ConfirmDialogComponent, ConfirmDialogData } from './confirm-dialog.component';
@@ -20,6 +21,7 @@ describe('ConfirmDialogComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ConfirmDialogComponent],
       providers: [
+        provideZonelessChangeDetection(),
         { provide: MAT_DIALOG_DATA, useValue: data },
         { provide: MatDialogRef, useValue: dialogRef },
       ],

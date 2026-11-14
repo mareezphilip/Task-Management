@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DashboardSidebarComponent } from './dashboard-sidebar.component';
 
@@ -5,7 +6,10 @@ describe('DashboardSidebarComponent', () => {
   let fixture: ComponentFixture<DashboardSidebarComponent>;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [DashboardSidebarComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [DashboardSidebarComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
     fixture = TestBed.createComponent(DashboardSidebarComponent);
     fixture.detectChanges();
   });

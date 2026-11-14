@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TaskCardComponent } from './task-card.component';
 import { Task } from '../../models/task.model';
@@ -5,13 +6,21 @@ import { Task } from '../../models/task.model';
 describe('TaskCardComponent', () => {
   let fixture: ComponentFixture<TaskCardComponent>;
   const task: Task = {
-    id: 'task-1', title: 'Example task', description: 'Task description', priority: 'medium',
-    status: 'todo', dueLabel: 'Due tomorrow', category: 'Design',
+    id: 'task-1',
+    title: 'Example task',
+    description: 'Task description',
+    priority: 'medium',
+    status: 'todo',
+    dueLabel: 'Due tomorrow',
+    category: 'Design',
     assignee: { name: 'Alex', initials: 'AL' },
   };
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({ imports: [TaskCardComponent] }).compileComponents();
+    await TestBed.configureTestingModule({
+      imports: [TaskCardComponent],
+      providers: [provideZonelessChangeDetection()],
+    }).compileComponents();
     fixture = TestBed.createComponent(TaskCardComponent);
     fixture.componentRef.setInput('task', task);
     fixture.detectChanges();

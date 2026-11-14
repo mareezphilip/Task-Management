@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { TeamDataService } from './team-data.service';
@@ -6,7 +7,7 @@ describe('TeamDataService', () => {
   let service: TeamDataService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
     service = TestBed.inject(TeamDataService);
   });
 

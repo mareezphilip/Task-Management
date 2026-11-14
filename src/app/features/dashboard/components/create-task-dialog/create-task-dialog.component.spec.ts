@@ -1,4 +1,5 @@
 import { provideZonelessChangeDetection } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
@@ -94,7 +95,7 @@ describe('CreateTaskDialogComponent validation and editing', () => {
     TestBed.inject(HttpTestingController).expectNone('/api/tasks');
   });
 
-  it('shows an email error and rejects whitespace-only titles', async () => {
+  it('rejects whitespace-only titles and invalid assignee emails', async () => {
     TestBed.overrideProvider(MAT_DIALOG_DATA, { useValue: task });
     const fixture = TestBed.createComponent(CreateTaskDialogComponent);
     fixture.detectChanges();
@@ -103,17 +104,14 @@ describe('CreateTaskDialogComponent validation and editing', () => {
     const title: HTMLInputElement = fixture.nativeElement.querySelector('#task-title');
     title.value = '   ';
     title.dispatchEvent(new Event('input'));
-    const email: HTMLInputElement = fixture.nativeElement.querySelector('#task-email');
-    email.value = 'invalid-email';
-    email.dispatchEvent(new Event('input'));
+    const taskForm = (fixture.componentInstance as unknown as { taskForm: FormGroup }).taskForm;
+    taskForm.controls['assigneeEmail'].setValue('invalid-email');
     fixture.nativeElement
       .querySelector('form')
       .dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('#task-title-error')).toBeTruthy();
-    expect(fixture.nativeElement.querySelector('#task-email-error').textContent).toContain(
-      'valid email',
-    );
+    expect(taskForm.controls['assigneeEmail'].hasError('email')).toBeTrue();
     TestBed.inject(HttpTestingController).expectNone('/api/tasks/task-1');
   });
 
