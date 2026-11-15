@@ -26,9 +26,13 @@ describe('CreateTaskDialogComponent validation and editing', () => {
   };
 
   function flushTeamRequest(): void {
-    TestBed.inject(HttpTestingController)
-      .expectOne('/api/team')
-      .flush({ members: [task.assignee] });
+    const http = TestBed.inject(HttpTestingController);
+    // Injecting the data services also starts their eager HTTP resources.
+    http.expectOne('/api/tasks').flush({ tasks: [], meta: { totalCount: 0, lastUpdated: '' } });
+    http.expectOne('/api/statistics').flush({ statistics: [], lastUpdated: '' });
+    const teamRequests = http.match('/api/team');
+    expect(teamRequests.length).toBe(2);
+    teamRequests.forEach((request) => request.flush({ members: [task.assignee] }));
   }
 
   beforeEach(() => {
@@ -122,9 +126,11 @@ describe('CreateTaskDialogComponent validation and editing', () => {
     flushTeamRequest();
     await fixture.whenStable();
     expect(fixture.nativeElement.querySelector('#task-due-date').value).toBe('2026-11-20');
-    const name: HTMLInputElement = fixture.nativeElement.querySelector('#task-assignee');
-    name.value = 'Changed name';
-    name.dispatchEvent(new Event('input'));
+    const taskForm = (fixture.componentInstance as unknown as { taskForm: FormGroup }).taskForm;
+    taskForm.controls['title'].setValue('Changed title');
+    taskForm.controls['assigneeEmail'].setValue('changed@example.com');
+    expect(task.title).toBe('Original title');
+    expect(task.assignee.email).toBe('alex@example.com');
     expect(task.assignee.name).toBe('Alex');
   });
 });

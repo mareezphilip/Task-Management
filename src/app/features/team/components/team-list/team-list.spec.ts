@@ -1,6 +1,5 @@
-import { provideZonelessChangeDetection } from '@angular/core';
+import { provideZonelessChangeDetection, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
 
 import { TeamList } from './team-list';
 import { TeamDataService } from '../../services/TeamDataService/team-data.service';
@@ -14,7 +13,10 @@ describe('TeamList', () => {
       imports: [TeamList],
       providers: [
         provideZonelessChangeDetection(),
-        { provide: TeamDataService, useValue: { getMembers: () => of({ members: [] }) } },
+        {
+          provide: TeamDataService,
+          useValue: { membersResource: { value: signal({ members: [] }) } },
+        },
       ],
     }).compileComponents();
 

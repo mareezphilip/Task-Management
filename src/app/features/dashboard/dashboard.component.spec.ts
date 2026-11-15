@@ -48,14 +48,16 @@ describe('DashboardComponent', () => {
     fixture.detectChanges();
     http.expectOne('/api/tasks').flush({ tasks: [], meta: { totalCount: 0, lastUpdated: '' } });
     http.expectOne('/api/statistics').flush({ statistics: [], lastUpdated: '' });
+    await fixture.whenStable();
     fixture.detectChanges();
   });
 
   afterEach(() => http.verify());
 
   it('clears loading when the initial requests fail', () => {
-    fixture.destroy();
-    fixture = TestBed.createComponent(DashboardComponent);
+    const data = TestBed.inject(DashboardDataService);
+    data.tasksResource.reload();
+    data.statisticsResource.reload();
     fixture.detectChanges();
     http.expectOne('/api/tasks').flush(null, { status: 500, statusText: 'Server Error' });
     http.expectOne('/api/statistics').flush(null, { status: 500, statusText: 'Server Error' });
