@@ -17,7 +17,15 @@
   font-size: 12px;
   text-align: left;
   text-decoration: none;
+  white-space: nowrap;
   transition: background-color 120ms ease;
+}
+
+.labeled-button.collapsed {
+  justify-content: center;
+  min-width: 36px;
+  gap: 0;
+  padding: 0;
 }
 
 .labeled-button:hover {

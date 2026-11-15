@@ -91,34 +91,30 @@
 }
 
 @media (max-width: 760px) {
+  :host {
+    position: relative;
+    min-height: 0;
+  }
+
   .sidebar {
-    padding: 7px 10px;
-    border-right: 0;
-    border-bottom: 1px solid #e8ebf0;
+    padding: 8px 6px;
+  }
+
+  .sidebar:not(.collapsed) {
+    position: absolute;
+    inset-inline-start: 0;
+    top: 0;
+    z-index: 20;
+    width: 180px;
+    min-height: 100%;
+    box-shadow: 6px 6px 18px #1b273326;
   }
 
   .collapse-toggle {
-    justify-content: flex-end;
-    min-height: 26px;
-    margin: 0 0 6px;
+    min-height: 36px;
   }
 
-  .nav-list {
-    display: flex;
-    overflow-x: auto;
-  }
-
-  .nav-list app-labeled-button {
-    flex: 0 0 auto;
-  }
-
-  .new-task {
-    width: auto;
-    margin: 8px 0 0 auto;
-    padding: 7px 12px;
-  }
-
-  .sidebar.collapsed .nav-list {
-    justify-content: space-between;
+  .sidebar.collapsed {
+    padding: 8px 6px;
   }
 }

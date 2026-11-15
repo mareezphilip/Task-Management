@@ -19,11 +19,8 @@
   min-width: 0;
 }
 @media (max-width: 760px) {
-  .workspace {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
+  .workspace,
   .workspace.sidebar-collapsed {
-    grid-template-columns: 1fr;
+    grid-template-columns: 56px minmax(0, 1fr);
   }
 }

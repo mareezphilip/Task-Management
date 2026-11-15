@@ -1,6 +1,7 @@
 @if (route(); as path) {
   <a
     class="labeled-button"
+    [class.collapsed]="collapsed()"
     [routerLink]="path"
     routerLinkActive="active"
     [routerLinkActiveOptions]="{ exact: true }"
@@ -15,6 +16,7 @@
 } @else {
   <button
     class="labeled-button"
+    [class.collapsed]="collapsed()"
     type="button"
     [attr.aria-label]="label()"
     [title]="collapsed() ? label() : null"

@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { DashboardSidebarComponent } from '../../shared/layout/dashboard-sidebar/dashboard-sidebar.component';
 import { DashboardHeaderComponent } from '../../features/dashboard/components/dashboard-header/dashboard-header.component';
 import { DashboardSearchService } from '../../features/dashboard/services/dashboard-search.service';
@@ -17,6 +19,13 @@ export class MainLayout {
   private readonly router = inject(Router);
   protected readonly sidebarCollapsed = signal(false);
   protected readonly showTaskSearch = this.isDashboardRoute(this.router.url);
+
+  constructor() {
+    inject(BreakpointObserver)
+      .observe('(max-width: 760px)')
+      .pipe(takeUntilDestroyed())
+      .subscribe(({ matches }) => this.sidebarCollapsed.set(matches));
+  }
 
   private isDashboardRoute(url: string): boolean {
     const path = url.split(/[?#]/, 1)[0].replace(/\/+$/, '') || '/';

@@ -112,11 +112,33 @@ Local validation on **14 November 2026** passed **43 Angular tests** and **2 API
 
 [CD](.github/workflows/cd.yml) publishes web/API images to **GitHub Container Registry** after successful CI for pushes to `master` or branches starting with `v`. It publishes the tested commit using `GITHUB_TOKEN`; enable Actions and package publishing permissions. Images receive branch/SHA tags, plus `latest` for `master`.
 
+### Run with Docker Compose
+
+Install **Docker Engine with the Compose plugin**, or **Docker Desktop**, and make sure Docker is running. Run these commands from the repository root, which contains [compose.yaml](compose.yaml):
+
 ```bash
 docker compose up --build -d
+docker compose ps
 ```
 
-Open **http://localhost:8080**. Set `WEB_PORT` to use another port, for example `WEB_PORT=18080 docker compose up --build -d` in Bash. Nginx serves Angular and proxies `/api` to Node. The `task-data` volume persists changes; `docker compose down` stops containers without deleting it.
+Open **http://localhost:8080**. Docker builds the application and starts both services; you do not need to run `npm ci`, `npm start`, or the API separately on your host.
+
+- **`web`** serves the Angular production build through Nginx on host port `8080` and forwards `/api` requests to the API container.
+- **`api`** runs the Node mock API on container port `3001`. It is available inside the Compose network and is not published directly to the host. The web service starts after the API health check passes.
+- **`task-data`** is a named volume that persists the API's JSON data across container restarts and rebuilds.
+
+| Command                        | Purpose                                                                 |
+| ------------------------------ | ----------------------------------------------------------------------- |
+| `docker compose up --build -d` | Build or rebuild images and start both services in the background.      |
+| `docker compose ps`            | Show container status and published ports.                              |
+| `docker compose logs -f`       | Follow logs from both services; press Ctrl+C to stop following.         |
+| `docker compose logs -f api`   | Follow only the API logs.                                               |
+| `docker compose restart`       | Restart the existing containers without rebuilding images.              |
+| `docker compose down`          | Stop and remove containers and the Compose network, keeping saved data. |
+
+To use a different host port, change `"8080:80"` to, for example, `"18080:80"` in `compose.yaml`, then run `docker compose up -d` and open **http://localhost:18080**. The current Compose file uses a fixed port mapping; it does not read `WEB_PORT`.
+
+The data volume survives `docker compose down`. Adding `--volumes` deletes it and removes saved task changes.
 
 ## Limitations and next steps
 
